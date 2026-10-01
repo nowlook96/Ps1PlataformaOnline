@@ -1,0 +1,39 @@
+## .NET / Visual Studio
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.log
+TestResults/
+publish/
+
+## Jogos e BIOS (nunca versionar)
+Jogos/*
+!Jogos/.gitkeep
+Bios/*
+!Bios/.gitkeep
+Apresentacao/Jogos/
+Apresentacao/Bios/
+*.bin
+*.cue
+*.chd
+*.pbp
+*.iso
+*.img
+*.mdf
+*.ecm
+*.7z
+*.zip
+
+## EmulatorJS local (opcional, baixado à parte)
+wwwroot/emulatorjs/
+
+## Sistema operacional / editores
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/

@@ -1,0 +1,55 @@
+@page "/"
+@rendermode InteractiveServer
+@implements IAsyncDisposable
+@inject GameLibraryService Library
+@inject IJSRuntime JS
+@inject IConfiguration Config
+
+<PageTitle>PlayStation na TV LG</PageTitle>
+
+<div id="stage" @ref="stage">
+    <div id="scene-host"></div>
+
+    <div id="emu-frame" class="emu-frame hidden">
+        <iframe id="emu" title="Emulador PlayStation" allow="fullscreen; gamepad; autoplay"></iframe>
+        <div class="crt-overlay"></div>
+    </div>
+
+    <div id="hint" class="hint">Clique no botão <b>POWER</b> para ligar a TV</div>
+
+    <nav class="remote">
+        <button id="btn-power" class="rbtn power" title="Ligar/Desligar (P)">⏻<span>POWER</span></button>
+        <button id="btn-menu" class="rbtn" title="Voltar ao menu (Esc)">☰<span>MENU</span></button>
+        <button id="btn-fullscreen" class="rbtn" title="Tela cheia (F)">⛶<span>TELA CHEIA</span></button>
+        <div id="pad-status" class="pad-status" title="Joystick">🎮<span>sem controle</span></div>
+    </nav>
+</div>
+
+@code {
+    private ElementReference stage;
+    private IJSObjectReference? module;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+
+        module = await JS.InvokeAsync<IJSObjectReference>("import", "./js/tv-scene.js");
+        await module.InvokeVoidAsync("init", stage, new
+        {
+            games = Library.GetGames(),
+            biosUrl = Library.GetBiosUrl(),
+            dataPath = Config["EmulatorJsDataPath"] ?? "https://cdn.emulatorjs.org/stable/data/"
+        });
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (module is null) return;
+        try
+        {
+            await module.InvokeVoidAsync("dispose");
+            await module.DisposeAsync();
+        }
+        catch (JSDisconnectedException) { }
+    }
+}

@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Apostila — PlataformaOnline</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm 20mm 16mm; }
+  :root {
+    --ink: #1d1b19; --muted: #5d5751; --accent: #a50034; --accent-soft: #fbeef2;
+    --blue: #1f4f8f; --blue-soft: #edf3fb; --green: #2c6b3a; --green-soft: #edf6ef;
+    --amber: #8a5a00; --amber-soft: #fdf5e4; --line: #ddd6cf; --code-bg: #f6f3ef;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Calibri, Arial, sans-serif; color: var(--ink); font-size: 10.5pt; line-height: 1.55; margin: 0; background: #fff; }
+  h1, h2, h3, h4 { font-family: "Segoe UI Semibold", "Segoe UI", Arial, sans-serif; line-height: 1.25; }
+  h2 { font-size: 19pt; color: var(--accent); margin: 0 0 4pt; padding-top: 2pt; }
+  h2 .num { display: inline-block; background: var(--accent); color: #fff; border-radius: 6px; padding: 0 9px; margin-right: 8px; font-size: 14pt; vertical-align: 3px; }
+  h3 { font-size: 13pt; margin: 18pt 0 4pt; color: var(--ink); border-bottom: 1px solid var(--line); padding-bottom: 3pt; }
+  h4 { font-size: 11pt; margin: 12pt 0 2pt; color: var(--blue); }
+  p { margin: 5pt 0; }
+  .lead { color: var(--muted); font-size: 11.5pt; margin-bottom: 10pt; }
+  .chapter { page-break-before: always; }
+  code { font-family: Consolas, "Cascadia Mono", monospace; font-size: 9.3pt; background: var(--code-bg); padding: 0 3px; border-radius: 3px; }
+  pre { font-family: Consolas, "Cascadia Mono", monospace; font-size: 8.8pt; line-height: 1.4; background: var(--code-bg); border: 1px solid var(--line); border-left: 4px solid var(--blue); border-radius: 4px; padding: 8px 10px; white-space: pre-wrap; word-break: break-word; page-break-inside: avoid; margin: 6pt 0; }
+  pre .c { color: #6e7a5a; } pre .k { color: #8a1c53; font-weight: 600; }
+  .file { font-family: Consolas, monospace; font-size: 8.5pt; color: var(--muted); margin: 8pt 0 -3pt; }
+  table { width: 100%; border-collapse: collapse; margin: 6pt 0 8pt; font-size: 9.5pt; page-break-inside: avoid; }
+  th { background: #efe9e3; text-align: left; font-weight: 600; }
+  th, td { border: 1px solid var(--line); padding: 4px 7px; vertical-align: top; }
+  td code { font-size: 8.6pt; }
+  .box { border-radius: 6px; padding: 8px 12px; margin: 9pt 0; page-break-inside: avoid; border: 1px solid; }
+  .box .t { font-weight: 700; display: block; margin-bottom: 2pt; }
+  .prof { background: var(--blue-soft); border-color: #c7d8ee; }
+  .prof .t { color: var(--blue); }
+  .warn { background: var(--amber-soft); border-color: #ecd6a6; }
+  .warn .t { color: var(--amber); }
+  .ok { background: var(--green-soft); border-color: #c4e0ca; }
+  .ok .t { color: var(--green); }
+  .recap { background: var(--accent-soft); border-color: #efc6d3; }
+  .recap .t { color: var(--accent); }
+  ol, ul { margin: 4pt 0 6pt; padding-left: 20pt; }
+  li { margin: 2pt 0; }
+  .steps li { margin: 4pt 0; }
+  .cover { height: 255mm; display: flex; flex-direction: column; justify-content: space-between; padding: 10mm 4mm 0; }
+  .cover .tag { color: var(--accent); font-weight: 700; letter-spacing: 3px; font-size: 10pt; }
+  .cover h1 { font-size: 34pt; margin: 6pt 0 4pt; color: var(--ink); }
+  .cover .sub { font-size: 14pt; color: var(--muted); max-width: 140mm; }
+  .cover .meta { font-size: 10pt; color: var(--muted); border-top: 2px solid var(--accent); padding-top: 8pt; }
+  .toc { columns: 1; font-size: 11pt; }
+  .toc li { margin: 4pt 0; }
+  .toc span { color: var(--muted); font-size: 9.5pt; }
+  figure { margin: 8pt 0; page-break-inside: avoid; text-align: center; }
+  figcaption { font-size: 9pt; color: var(--muted); margin-top: 3pt; }
+  .kbd { font-family: Consolas, monospace; font-size: 8.8pt; border: 1px solid #bbb; border-bottom-width: 2px; border-radius: 3px; padding: 0 4px; background: #fafafa; }
+  .two { display: flex; gap: 10px; } .two > div { flex: 1; }
+</style>
+</head>
+<body>
+
+<!-- ============================ CAPA ============================ -->
+<section class="cover">
+  <div>
+    <div class="tag">APOSTILA DO PROJETO</div>
+    <h1>PlataformaOnline</h1>
+    <div class="sub">Uma sala 3D com TV CRT LG e PlayStation 1 rodando jogos no navegador: como foi construída, como usar e como manter.</div>
+    <svg viewBox="0 0 520 300" width="100%" style="margin-top:14mm" aria-hidden="true">
+      <rect x="0" y="0" width="520" height="300" rx="14" fill="#2a1d15"/>
+      <ellipse cx="90" cy="70" rx="70" ry="60" fill="#ffb46b" opacity="0.18"/>
+      <polygon points="70,40 110,40 122,80 58,80" fill="#e6cfa4"/>
+      <rect x="88" y="80" width="4" height="190" fill="#1a1512"/>
+      <rect x="140" y="200" width="300" height="90" rx="4" fill="#3b2618"/>
+      <rect x="170" y="62" width="240" height="140" rx="16" fill="#c3c6cc"/>
+      <rect x="192" y="76" width="196" height="102" rx="10" fill="#0f1a4a"/>
+      <text x="290" y="104" font-family="Segoe UI, Arial" font-size="14" fill="#fff" text-anchor="middle" font-weight="700">SELECIONE O JOGO</text>
+      <rect x="208" y="116" width="164" height="16" rx="3" fill="#3a5ad8"/>
+      <rect x="208" y="138" width="164" height="16" rx="3" fill="#1d2b70"/>
+      <circle cx="383" cy="190" r="4" fill="#33dd55"/>
+      <text x="206" y="194" font-family="Arial" font-size="10" font-weight="700" fill="#a50034">LG</text>
+      <rect x="210" y="236" width="110" height="26" rx="5" fill="#cfcfc8"/>
+      <circle cx="245" cy="244" r="10" fill="#bdbdb6"/>
+      <ellipse cx="290" cy="230" rx="160" ry="28" fill="#9fb4ff" opacity="0.10"/>
+    </svg>
+  </div>
+  <div class="meta">
+    Blazor Web App (.NET 8) · Three.js 0.160 · EmulatorJS (core <code>psx</code>)<br>
+    Pasta do projeto: <code>D:\DevGAmes\PlataformaOnline</code> · Versão desta apostila: outubro de 2026
+  </div>
+</section>
+
+<!-- ============================ SUMÁRIO ============================ -->
+<section class="chapter">
+  <h2>Sumário</h2>
+  <p class="lead">Esta apostila foi escrita como um curso curto. Cada capítulo é uma "aula": começa explicando o porquê, mostra o como e termina com um resumo. No fim há receitas de manutenção, um guia de problemas e exercícios para fixar.</p>
+  <ol class="toc">
+    <li><b>Aula 1 — O que é o projeto</b> <span>visão geral e o que acontece quando você liga a TV</span></li>
+    <li><b>Aula 2 — Preparando o ambiente e rodando</b> <span>pré-requisitos, comandos, onde colocar jogos e BIOS</span></li>
+    <li><b>Aula 3 — A arquitetura</b> <span>servidor, página, cena 3D, emulador e como eles conversam</span></li>
+    <li><b>Aula 4 — Tour pelos arquivos</b> <span>o papel de cada arquivo, um por um</span></li>
+    <li><b>Aula 5 — Estudo de caso 1: o jogo .cue + .bin que não iniciava</b></li>
+    <li><b>Aula 6 — Estudo de caso 2: o controle que o emulador não reconhecia</b></li>
+    <li><b>Aula 7 — Estudo de caso 3: luzes e sombras para dar realismo</b></li>
+    <li><b>Aula 8 — Receitas de manutenção</b> <span>como alterar cada parte com segurança</span></li>
+    <li><b>Aula 9 — Diagnóstico de problemas</b> <span>sintoma → causa provável → o que fazer</span></li>
+    <li><b>Aula 10 — Exercícios e glossário</b></li>
+  </ol>
+  <div class="box prof"><span class="t">Como estudar esta apostila</span>
+    Leia as aulas 1 a 4 em ordem: elas dão o mapa mental do projeto. As aulas 5 a 7 contam o que foi corrigido e adicionado, e por quê. As aulas 8 e 9 são para consulta: volte a elas quando for mexer no projeto.
+  </div>
+  <div class="box warn"><span class="t">Regras do projeto (não quebre!)</span>
+    <ul>
+      <li>Use <b>só os SDKs .NET já instalados</b>. O projeto está fixado no <b>.NET 8.0.302</b> pelo <code>global.json</code>. Não instale SDKs, runtimes ou workloads novos.</li>
+      <li>O <code>.csproj</code> fica <b>direto na raiz</b> (<code>D:\DevGAmes\PlataformaOnline</code>), sem subpastas de solução.</li>
+      <li><b>Não adicione pacotes NuGet</b> além dos que vêm no template Blazor do .NET 8 sem combinar antes.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================ AULA 1 ============================ -->
+<section class="chapter">
+  <h2><span class="num">1</span>O que é o projeto</h2>
+  <p class="lead">Imagine uma sala dos anos 2000: um rack de madeira, uma TV de tubo LG prata e um PlayStation 1 na prateleira. É isso que o projeto desenha em 3D no navegador, e os jogos funcionam de verdade.</p>
+
+  <h3>A experiência do usuário, passo a passo</h3>
+  <ol class="steps">
+    <li>A página abre mostrando a sala em 3D. Dá para girar a câmera arrastando o mouse.</li>
+    <li>Você aperta <b>POWER</b> (botão da barra, tecla <span class="kbd">P</span> ou clique no botão da TV/PS1). A tela do CRT "acende" com aquela linha horizontal que se abre.</li>
+    <li>Aparece o OSD azul <b>AV1</b> da TV, depois o boot do PlayStation (tela branca da Sony e o logo PS), com som.</li>
+    <li>Surge o <b>menu de jogos</b>, com tudo que está na pasta <code>Jogos/</code>.</li>
+    <li>Ao escolher um jogo, a câmera faz zoom até enquadrar a tela. Um <b>iframe</b> com o emulador é posicionado exatamente por cima da tela da TV.</li>
+    <li>O jogo roda pelo <b>EmulatorJS</b>. <span class="kbd">Esc</span> volta ao menu; <span class="kbd">F</span> ou <b>Select + Start</b> alterna a tela cheia.</li>
+  </ol>
+
+  <h3>As tecnologias, em uma frase cada</h3>
+  <table>
+    <tr><th style="width:26%">Tecnologia</th><th>Para que serve aqui</th></tr>
+    <tr><td><b>ASP.NET Core / Blazor (.NET 8)</b></td><td>O servidor. Entrega a página, lista os jogos (<code>/api/games</code>), serve os arquivos dos jogos e da BIOS e empacota <code>.cue + .bin</code> em <code>.zip</code>.</td></tr>
+    <tr><td><b>Three.js 0.160</b></td><td>A biblioteca de 3D no navegador (WebGL). Desenha a sala, a TV, o PS1, as luzes e as sombras.</td></tr>
+    <tr><td><b>Canvas 2D</b></td><td>Desenha o conteúdo da tela da TV (boot, menu), que vira uma textura no modelo 3D.</td></tr>
+    <tr><td><b>Shader GLSL</b></td><td>Dá o visual de CRT na tela: curvatura, scanlines, chiado e a animação de ligar.</td></tr>
+    <tr><td><b>EmulatorJS</b></td><td>Emulador de PS1 (RetroArch compilado para WebAssembly) que roda dentro do <code>player.html</code>.</td></tr>
+    <tr><td><b>Gamepad API</b></td><td>API do navegador que lê joysticks USB/Bluetooth.</td></tr>
+  </table>
+
+  <div class="box recap"><span class="t">Resumo da aula</span>
+    O servidor .NET é simples: lista e entrega arquivos. Quase toda a "mágica" visual está no JavaScript da pasta <code>wwwroot/js</code>, e o jogo em si roda no EmulatorJS dentro de um iframe.
+  </div>
+</section>
+
+<!-- ============================ AULA 2 ============================ -->
+<section class="chapter">
+  <h2><span class="num">2</span>Preparando o ambiente e rodando</h2>
+  <p class="lead">Antes de mexer em qualquer coisa, você precisa saber rodar o projeto. Vamos do zero.</p>
+
+  <h3>Pré-requisitos</h3>
+  <ul>
+    <li><b>.NET SDK 8.0.302</b> (já instalado na máquina). Confira com <code>dotnet --list-sdks</code>.</li>
+    <li>Um navegador moderno: <b>Chrome</b> ou <b>Edge</b> (recomendados para joysticks).</li>
+    <li><b>Internet</b> na primeira execução: o Three.js e o EmulatorJS vêm de CDN. Para rodar offline, veja a Receita 8.4.</li>
+  </ul>
+
+  <h3>Rodando</h3>
+<pre><span class="c"># na pasta do projeto</span>
+cd D:\DevGAmes\PlataformaOnline
+dotnet build      <span class="c"># compila e mostra erros, se houver</span>
+dotnet run        <span class="c"># sobe o servidor (http://localhost:5136 pelo perfil "http")</span></pre>
+  <p>Abra o endereço que aparecer no terminal. Para parar o servidor, use <span class="kbd">Ctrl</span>+<span class="kbd">C</span> no terminal.</p>
+  <div class="box prof"><span class="t">Dica do professor</span>
+    Mudou só arquivos de <code>wwwroot/</code> (JS, CSS, HTML)? Em geral basta recarregar a página com <span class="kbd">Ctrl</span>+<span class="kbd">F5</span>. Mudou arquivos <code>.cs</code> ou <code>.razor</code>? Pare e rode <code>dotnet run</code> de novo.
+  </div>
+
+  <h3>Colocando jogos</h3>
+  <p>Copie seus jogos (dumps dos seus próprios discos) para a pasta <code>Jogos/</code>. Formatos aceitos:</p>
+  <table>
+    <tr><th style="width:24%">Formato</th><th>Observação</th></tr>
+    <tr><td><code>.chd</code>, <code>.pbp</code></td><td><b>Recomendados.</b> Um arquivo só, compactado.</td></tr>
+    <tr><td><code>.cue</code> + <code>.bin</code></td><td>Funciona. O servidor junta os dois em um <code>.zip</code> automaticamente (veja a Aula 5). O <code>.bin</code> deve ter o nome citado dentro do <code>.cue</code>.</td></tr>
+    <tr><td><code>.iso</code>, <code>.img</code>, <code>.bin</code></td><td>Imagem única do disco.</td></tr>
+    <tr><td><code>.zip</code>, <code>.7z</code></td><td>Com o <code>.cue</code> e os <code>.bin</code> dentro.</td></tr>
+  </table>
+  <p><b>Capa opcional:</b> coloque uma imagem <code>.png</code>, <code>.jpg</code>, <code>.jpeg</code> ou <code>.webp</code> com o <b>mesmo nome</b> do jogo. Exemplo: <code>Crash.chd</code> e <code>Crash.png</code>.</p>
+  <p><b>Nome no menu:</b> é o nome do arquivo sem extensão, com <code>_</code> trocado por espaço.</p>
+
+  <h3>BIOS (opcional)</h3>
+  <p>Coloque a BIOS do seu console em <code>Bios/</code>. O servidor procura nesta ordem: <code>scph5501.bin</code>, <code>scph5500.bin</code>, <code>scph5502.bin</code>, <code>scph1001.bin</code>, <code>scph7001.bin</code>, <code>scph101.bin</code> e, por fim, qualquer <code>.bin</code>. Sem BIOS, o emulador usa uma BIOS simulada (HLE), que funciona na maioria dos jogos.</p>
+
+  <h3>Comandos do usuário</h3>
+  <table>
+    <tr><th>Ação</th><th>Teclado</th><th>Joystick</th><th>Mouse</th></tr>
+    <tr><td>Ligar/desligar</td><td><span class="kbd">P</span></td><td>Start/✕ com a TV desligada</td><td>POWER, ou botão da TV/PS1</td></tr>
+    <tr><td>Navegar no menu</td><td>Setas</td><td>D-pad ou analógico</td><td>Clique no jogo</td></tr>
+    <tr><td>Iniciar jogo</td><td><span class="kbd">Enter</span> / <span class="kbd">Espaço</span></td><td>✕ ou Start</td><td>Clique no jogo selecionado</td></tr>
+    <tr><td>Voltar ao menu</td><td><span class="kbd">Esc</span> / <span class="kbd">Backspace</span></td><td>— (ver Exercício 5)</td><td>Botão MENU</td></tr>
+    <tr><td>Tela cheia</td><td><span class="kbd">F</span></td><td>Select + Start</td><td>Botão TELA CHEIA</td></tr>
+  </table>
+</section>
+
+<!-- ============================ AULA 3 ============================ -->
+<section class="chapter">
+  <h2><span class="num">3</span>A arquitetura</h2>
+  <p class="lead">Arquitetura é "quem faz o quê e como as partes conversam". Entendendo o desenho abaixo, você entende o projeto.</p>
+
+  <figure>
+    <svg viewBox="0 0 640 330" width="100%" font-family="Segoe UI, Arial" font-size="11">
+      <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#555"/></marker></defs>
+      <rect x="10" y="10" width="200" height="310" rx="10" fill="#f3efe9" stroke="#cbbfb2"/>
+      <text x="110" y="30" text-anchor="middle" font-weight="700">SERVIDOR (.NET 8)</text>
+      <rect x="25" y="45" width="170" height="44" rx="6" fill="#fff" stroke="#999"/><text x="110" y="63" text-anchor="middle" font-weight="600">Program.cs</text><text x="110" y="78" text-anchor="middle" fill="#666">rotas e arquivos estáticos</text>
+      <rect x="25" y="100" width="170" height="44" rx="6" fill="#fff" stroke="#999"/><text x="110" y="118" text-anchor="middle" font-weight="600">GameLibraryService</text><text x="110" y="133" text-anchor="middle" fill="#666">lista jogos, BIOS, zip de cue</text>
+      <rect x="25" y="155" width="170" height="44" rx="6" fill="#fff" stroke="#999"/><text x="110" y="173" text-anchor="middle" font-weight="600">Home.razor</text><text x="110" y="188" text-anchor="middle" fill="#666">página + chama o JS</text>
+      <rect x="25" y="210" width="80" height="44" rx="6" fill="#fff" stroke="#999"/><text x="65" y="236" text-anchor="middle">Jogos/</text>
+      <rect x="115" y="210" width="80" height="44" rx="6" fill="#fff" stroke="#999"/><text x="155" y="236" text-anchor="middle">Bios/</text>
+      <text x="110" y="282" text-anchor="middle" fill="#666">/api/games · /api/bios</text>
+      <text x="110" y="297" text-anchor="middle" fill="#666">/jogos/… · /bios/…</text>
+      <text x="110" y="312" text-anchor="middle" fill="#666">/api/cue-zip/{nome}.zip</text>
+
+      <rect x="250" y="10" width="380" height="310" rx="10" fill="#edf3fb" stroke="#b8cbe6"/>
+      <text x="440" y="30" text-anchor="middle" font-weight="700">NAVEGADOR</text>
+      <rect x="265" y="45" width="170" height="44" rx="6" fill="#fff" stroke="#7a9cc9"/><text x="350" y="63" text-anchor="middle" font-weight="600">tv-scene.js</text><text x="350" y="78" text-anchor="middle" fill="#666">cena, estados, câmera, luzes</text>
+      <rect x="450" y="45" width="165" height="30" rx="6" fill="#fff" stroke="#7a9cc9"/><text x="532" y="64" text-anchor="middle">tv-models.js (TV, PS1)</text>
+      <rect x="450" y="82" width="165" height="30" rx="6" fill="#fff" stroke="#7a9cc9"/><text x="532" y="101" text-anchor="middle">boot-screens.js (tela)</text>
+      <rect x="450" y="119" width="165" height="30" rx="6" fill="#fff" stroke="#7a9cc9"/><text x="532" y="138" text-anchor="middle">crt-shader.js (efeito CRT)</text>
+      <rect x="450" y="156" width="165" height="30" rx="6" fill="#fff" stroke="#7a9cc9"/><text x="532" y="175" text-anchor="middle">input.js (menu)</text>
+      <rect x="265" y="110" width="170" height="30" rx="6" fill="#fff" stroke="#7a9cc9"/><text x="350" y="129" text-anchor="middle">pad-map.js (joystick)</text>
+      <rect x="265" y="210" width="350" height="96" rx="8" fill="#fff" stroke="#a50034"/>
+      <text x="440" y="228" text-anchor="middle" font-weight="700" fill="#a50034">iframe: player.html</text>
+      <rect x="280" y="238" width="150" height="56" rx="6" fill="#fbeef2" stroke="#d99ab0"/><text x="355" y="262" text-anchor="middle" font-weight="600">EmulatorJS</text><text x="355" y="278" text-anchor="middle" fill="#666">core psx (WebAssembly)</text>
+      <rect x="445" y="238" width="155" height="56" rx="6" fill="#fbeef2" stroke="#d99ab0"/><text x="522" y="262" text-anchor="middle" font-weight="600">Ponte de joystick</text><text x="522" y="278" text-anchor="middle" fill="#666">usa pad-map.js</text>
+
+      <line x1="195" y1="177" x2="263" y2="70" stroke="#555" marker-end="url(#a)"/>
+      <line x1="435" y1="67" x2="448" y2="60" stroke="#555" marker-end="url(#a)"/>
+      <line x1="350" y1="89" x2="350" y2="108" stroke="#555" marker-end="url(#a)"/>
+      <line x1="350" y1="140" x2="350" y2="208" stroke="#555" marker-end="url(#a)"/>
+      <line x1="278" y1="266" x2="197" y2="234" stroke="#555" marker-end="url(#a)"/>
+      <text x="236" y="272" fill="#555" font-size="9.5">baixa o jogo</text>
+      <text x="356" y="190" fill="#555" font-size="9.5">abre ?game=…&amp;bios=…</text>
+    </svg>
+    <figcaption>Figura 1: o servidor entrega a página e os arquivos; o navegador faz a cena 3D e roda o emulador num iframe.</figcaption>
+  </figure>
+
+  <h3>O caminho de um clique até o jogo rodar</h3>
+  <ol class="steps">
+    <li><b>Home.razor</b> renderiza a página e, no primeiro render, importa <code>tv-scene.js</code> e chama <code>init(stage, { games, biosUrl, dataPath })</code>. A lista de jogos vem do <code>GameLibraryService</code>.</li>
+    <li><b>tv-scene.js</b> monta a cena (renderer, câmera, luzes, sala, TV, PS1) e começa o loop de animação (<code>_loop</code>, cerca de 60 vezes por segundo).</li>
+    <li>O loop é uma <b>máquina de estados</b>:
+      <pre>OFF → TV_ON (1,6 s) → SONY (4,0 s) → PS_LOGO (3,2 s) → MENU → LOADING → PLAYING
+         ↑                                                        │
+         └──────────── POWER (desliga de qualquer estado) ────────┘</pre>
+      Em cada estado, o <code>ScreenPainter</code> (<code>boot-screens.js</code>) desenha a tela correspondente num canvas 640×480. Esse canvas vira textura, e o shader CRT a exibe na TV.</li>
+    <li>No <b>MENU</b>, ao confirmar, a câmera faz zoom até a tela (<code>startGame</code>). Ao terminar o movimento, <code>_openEmulator</code> carrega <code>player.html?game=…&amp;bios=…&amp;title=…&amp;data=…</code> no iframe.</li>
+    <li><b>player.html</b> configura as variáveis <code>EJS_*</code> e carrega o <code>loader.js</code> do EmulatorJS, que baixa o jogo pela URL recebida e inicia o core <code>psx</code>.</li>
+    <li>O iframe é reposicionado a cada frame (<code>_positionEmulator</code>) para ficar <b>exatamente</b> em cima da tela 3D, projetando os cantos da tela para coordenadas de pixel.</li>
+    <li>Iframe e página conversam por <code>postMessage</code>: <code>ready</code>, <code>back</code> (Esc) e <code>fullscreen</code>.</li>
+  </ol>
+
+  <div class="box prof"><span class="t">Por que um iframe?</span>
+    O EmulatorJS espera ser dono da página: ele cria a própria interface, captura teclado e usa variáveis globais (<code>window.EJS_*</code>). Isolando-o num iframe, a cena 3D não sofre interferência, e "fechar o jogo" é só trocar o <code>src</code> do iframe para <code>about:blank</code>.
+  </div>
+
+  <h3>Configuração (<code>appsettings.json</code>)</h3>
+<pre>{
+  "GamesFolder": "Jogos",          <span class="c">// pasta dos jogos (relativa ao projeto ou absoluta)</span>
+  "BiosFolder": "Bios",            <span class="c">// pasta da BIOS</span>
+  "EmulatorJsDataPath": "https://cdn.emulatorjs.org/stable/data/"  <span class="c">// de onde vem o EmulatorJS</span>
+}</pre>
+</section>
+
+<!-- ============================ AULA 4 ============================ -->
+<section class="chapter">
+  <h2><span class="num">4</span>Tour pelos arquivos</h2>
+  <p class="lead">Um mapa do projeto. Quando surgir a dúvida "onde eu mexo para…?", comece por esta tabela.</p>
+  <table>
+    <tr><th style="width:34%">Arquivo</th><th>Responsabilidade</th></tr>
+    <tr><td><code>PlataformaOnline.csproj</code></td><td>Projeto .NET (<code>net8.0</code>, sem pacotes extras).</td></tr>
+    <tr><td><code>global.json</code></td><td>Fixa o SDK 8.0.302.</td></tr>
+    <tr><td><code>appsettings.json</code></td><td>Pastas de jogos/BIOS e endereço do EmulatorJS.</td></tr>
+    <tr><td><code>Program.cs</code></td><td>Registra serviços; serve <code>Jogos/</code> em <code>/jogos</code> e <code>Bios/</code> em <code>/bios</code>; APIs <code>/api/games</code>, <code>/api/bios</code> e <code>/api/cue-zip/{nome}.zip</code>.</td></tr>
+    <tr><td><code>Services/GameLibraryService.cs</code></td><td>Varre a pasta de jogos, acha capas, escolhe a BIOS e gera o zip de <code>.cue</code>.</td></tr>
+    <tr><td><code>Models/GameInfo.cs</code></td><td>O "formulário" de cada jogo: <code>Id</code>, <code>Title</code>, <code>FileName</code>, <code>Url</code>, <code>CoverUrl</code>, <code>SizeBytes</code>.</td></tr>
+    <tr><td><code>Components/App.razor</code></td><td>HTML base; o <b>importmap</b> que diz de onde vem o Three.js (versão 0.160.0).</td></tr>
+    <tr><td><code>Components/Pages/Home.razor</code></td><td>A página: estrutura (cena, iframe, barra de botões) e a chamada ao <code>tv-scene.js</code>.</td></tr>
+    <tr><td><code>wwwroot/css/tv.css</code></td><td>Visual da barra estilo controle remoto, da dica e do iframe.</td></tr>
+    <tr><td><code>wwwroot/js/tv-scene.js</code></td><td><b>O coração.</b> Renderer, câmera, luzes, sombras, sala, abajur, estados, cliques, áudio sintetizado e posicionamento do emulador.</td></tr>
+    <tr><td><code>wwwroot/js/tv-models.js</code></td><td>Modelagem procedural da TV LG Flatron e do PS1 (sem arquivos 3D externos).</td></tr>
+    <tr><td><code>wwwroot/js/boot-screens.js</code></td><td>Desenha no canvas o OSD da TV, o boot Sony/PS, o menu e a tela de carregamento.</td></tr>
+    <tr><td><code>wwwroot/js/crt-shader.js</code></td><td>Shader do CRT: curvatura, scanlines, ruído, vinheta e animação de ligar.</td></tr>
+    <tr><td><code>wwwroot/js/input.js</code></td><td>Teclado + joystick para navegar <b>fora</b> do jogo.</td></tr>
+    <tr><td><code>wwwroot/js/pad-map.js</code></td><td><b>Novo.</b> Lê qualquer joystick e o converte para o layout padrão.</td></tr>
+    <tr><td><code>wwwroot/player.html</code></td><td>Página do emulador (no iframe) e a <b>ponte de joystick</b>.</td></tr>
+    <tr><td><code>Jogos/</code>, <code>Bios/</code></td><td>Seus arquivos. Não fazem parte do código.</td></tr>
+    <tr><td><code>DOCS/</code></td><td>Esta apostila (HTML editável + PDF).</td></tr>
+  </table>
+
+  <div class="box prof"><span class="t">Padrão de modelagem: "procedural"</span>
+    Repare que não há arquivos <code>.glb</code> ou <code>.obj</code>. TV, PS1, rack e abajur são montados com formas básicas do Three.js (caixas, cilindros, extrusões), e logotipos e texturas são desenhados em canvas. Vantagem: nenhum asset proprietário e tudo editável por código. Para mudar o tamanho da TV, por exemplo, altere <code>W</code>, <code>H</code>, <code>screenW</code> e <code>screenH</code> em <code>createLgTv()</code>.
+  </div>
+</section>
+
+<!-- ============================ AULA 5 ============================ -->
+<section class="chapter">
+  <h2><span class="num">5</span>Estudo de caso 1: o jogo .cue + .bin que não iniciava</h2>
+  <p class="lead">O primeiro problema da sessão: "adicionei um jogo, mas não iniciou". Vamos ver como um bug é investigado de verdade.</p>
+
+  <h3>O sintoma</h3>
+  <p>A pasta <code>Jogos/</code> tinha <code>Ps1HelloWorld0.1.cue</code> (146 bytes) e <code>Ps1HelloWorld0.1.bin</code> (13 MB). O jogo aparecia no menu, mas não rodava.</p>
+
+  <h3>A investigação</h3>
+  <p>Um arquivo <code>.cue</code> é só um <b>índice em texto</b>. Ele diz "os dados estão no arquivo tal":</p>
+<pre>FILE "Ps1HelloWorld0.1.bin" BINARY
+  TRACK 01 MODE2/2352
+    INDEX 01 00:00:00
+  TRACK 02 AUDIO
+    ...</pre>
+  <p>O serviço listava o <code>.cue</code> (e escondia o <code>.bin</code> do menu), e a URL do jogo era <code>/jogos/Ps1HelloWorld0.1.cue</code>. Só que o EmulatorJS baixa <b>uma única URL</b>. Ele recebia o índice de 146 bytes e não tinha como buscar o <code>.bin</code>. Era como receber o sumário de um livro sem o livro.</p>
+
+  <h3>A solução</h3>
+  <p>O EmulatorJS aceita <code>.zip</code> e procura o <code>.cue</code> lá dentro. Então o servidor passou a <b>empacotar</b> o <code>.cue</code> com todos os arquivos que ele cita:</p>
+  <ol class="steps">
+    <li>Em <code>ToGameInfo</code>, se o jogo é <code>.cue</code>, a URL vira <code>/api/cue-zip/{nome}.zip</code> em vez de <code>/jogos/{nome}.cue</code>.</li>
+    <li><code>GetCueZip(baseName)</code> lê as linhas <code>FILE "…"</code> do <code>.cue</code> (expressão regular), junta os arquivos existentes e cria um zip <b>sem compressão</b> (<code>CompressionLevel.NoCompression</code>). Sem compressão porque é bem mais rápido e as imagens de disco quase não comprimem.</li>
+    <li>O zip vai para um <b>cache</b> em <code>%TEMP%\PlataformaOnline\cue-zip\</code> e só é refeito se o <code>.cue</code> ou um <code>.bin</code> for mais novo que o zip.</li>
+    <li>A rota em <code>Program.cs</code> entrega o arquivo com suporte a <i>range requests</i> (download em partes).</li>
+  </ol>
+  <p class="file">Services/GameLibraryService.cs (trecho)</p>
+<pre><span class="k">var</span> isCue = Path.GetExtension(path).Equals(<span class="k">".cue"</span>, StringComparison.OrdinalIgnoreCase);
+...
+Url: isCue
+    ? <span class="k">"/api/cue-zip/"</span> + Uri.EscapeDataString(baseName) + <span class="k">".zip"</span>
+    : <span class="k">"/jogos/"</span> + Uri.EscapeDataString(fileName),</pre>
+  <p class="file">Program.cs (trecho)</p>
+<pre>app.MapGet(<span class="k">"/api/cue-zip/{name}.zip"</span>, (<span class="k">string</span> name, GameLibraryService lib) =&gt;
+    lib.GetCueZip(name) <span class="k">is</span> { } zip
+        ? Results.File(zip, <span class="k">"application/zip"</span>, name + <span class="k">".zip"</span>, enableRangeProcessing: <span class="k">true</span>)
+        : Results.NotFound());</pre>
+
+  <div class="box ok"><span class="t">Detalhes de segurança e robustez</span>
+    <ul>
+      <li>O nome recebido na URL é validado (<code>Path.GetInvalidFileNameChars</code>) e só se usa <code>Path.GetFileName</code> dos arquivos citados no <code>.cue</code>. Assim ninguém consegue pedir arquivos fora da pasta <code>Jogos/</code> com <code>..\</code>.</li>
+      <li>O zip é escrito primeiro num <code>.tmp</code> e depois renomeado, e um <code>lock</code> evita dois zips sendo criados ao mesmo tempo.</li>
+    </ul>
+  </div>
+  <div class="box warn"><span class="t">Limitação conhecida</span>
+    O tamanho exibido para jogos <code>.cue</code> (<code>SizeBytes</code>) é o do próprio <code>.cue</code>, não o do jogo inteiro. É só informativo. Veja o Exercício 2.
+  </div>
+  <div class="box recap"><span class="t">Lição</span>
+    Antes de mexer no código, entenda o <b>formato dos dados</b> e o <b>contrato</b> de cada peça. O EmulatorJS espera "uma URL = um jogo completo", e nossa URL apontava para só um pedaço do jogo.
+  </div>
+</section>
+
+<!-- ============================ AULA 6 ============================ -->
+<section class="chapter">
+  <h2><span class="num">6</span>Estudo de caso 2: o controle que o emulador não reconhecia</h2>
+  <p class="lead">Segundo problema: "o controle não foi identificado pelo emulador". Esse é mais sutil e ensina muito sobre a Gamepad API.</p>
+
+  <h3>Como o navegador enxerga um joystick</h3>
+  <p><code>navigator.getGamepads()</code> devolve uma lista de objetos com <code>buttons[]</code> (pressionado ou não), <code>axes[]</code> (valores de −1 a 1) e <code>mapping</code>.</p>
+  <ul>
+    <li>Se <code>mapping === "standard"</code>, o navegador reorganizou o controle num layout conhecido: 0 = ✕, 1 = ○, 2 = □, 3 = △, 12–15 = direcional.</li>
+    <li>Se <code>mapping === ""</code> (controle "genérico"), os botões vêm <b>na ordem do fabricante</b>. Em adaptadores e controles USB baratos de PS1/PS2, é comum: 0 = △, 1 = ○, 2 = ✕, 3 = □. O direcional chega por um <b>hat switch</b> (geralmente <code>axes[9]</code>) ou pelos eixos 0/1.</li>
+    <li>Por privacidade, o Chrome só revela o joystick depois que <b>um botão é apertado</b> com a página em foco.</li>
+  </ul>
+
+  <h3>A causa</h3>
+  <p>Lendo o código-fonte do EmulatorJS (<code>gamepad.js</code> e <code>emulator.js</code>), vimos que o mapeamento padrão dele procura <code>DPAD_UP</code> = botão 12, <code>BUTTON_1</code> = botão 0 etc., ou seja, o layout <i>standard</i>. Em um controle genérico, o botão 12 não existe e o direcional chega por eixo. Resultado: o jogo não reage.</p>
+
+  <h3>A solução em três partes</h3>
+  <h4>1. <code>pad-map.js</code>: um "tradutor" único de joystick</h4>
+  <p>A função <code>readPad(pad)</code> devolve sempre <code>{ buttons: [16 booleanos no layout standard], lx, ly, rx, ry }</code>:</p>
+<pre><span class="k">const</span> GENERIC_FACE = [2, 1, 3, 0];  <span class="c">// standard [✕, ○, □, △] ← botão no controle genérico</span>
+
+<span class="k">if</span> (pad.mapping === <span class="k">'standard'</span>) { <span class="c">/* copia direto */</span> }
+<span class="k">else</span> {
+    GENERIC_FACE.forEach((src, dst) =&gt; { b[dst] = raw(src); });
+    <span class="c">// hat switch: -1 = cima, avança 2/7 por posição no sentido horário; repouso fica fora de [-1, 1]</span>
+    <span class="k">const</span> dir = Math.round((hat + 1) * 3.5);   <span class="c">// 0 = cima … 7 = cima-esquerda</span>
+}
+<span class="c">// o analógico esquerdo também aciona o direcional</span>
+<span class="k">if</span> (ly &lt; -0.5) b[12] = <span class="k">true</span>;  ...</pre>
+
+  <h4>2. Ponte de joystick no <code>player.html</code></h4>
+  <p>Em vez de depender do leitor interno do EmulatorJS, um script (<code>&lt;script type="module"&gt;</code>) roda a cada frame:</p>
+  <ol>
+    <li>Pega os controles do próprio iframe. Se o iframe não enxergar nenhum, usa os que a página da TV vê (<code>parent.navigator</code>, permitido porque é a mesma origem).</li>
+    <li>Quando o jogo começa (<code>EJS_emulator.started</code>), desliga o leitor interno (<code>emu.gamepad.terminate()</code>) para não haver comandos dobrados.</li>
+    <li>Converte com <code>readPad</code> e envia ao core com <code>gameManager.simulateInput(jogador, id, valor)</code>, <b>só quando o valor muda</b>.</li>
+  </ol>
+  <p>A tabela <code>RETRO</code> traduz o índice <i>standard</i> para o ID que o RetroArch (dentro do EmulatorJS) entende:</p>
+  <table>
+    <tr><th>Botão (standard)</th><th>0 ✕</th><th>1 ○</th><th>2 □</th><th>3 △</th><th>4 L1</th><th>5 R1</th><th>6 L2</th><th>7 R2</th></tr>
+    <tr><td>ID RetroArch</td><td>0 (B)</td><td>8 (A)</td><td>1 (Y)</td><td>9 (X)</td><td>10</td><td>11</td><td>12</td><td>13</td></tr>
+    <tr><th>Botão (standard)</th><th>8 Select</th><th>9 Start</th><th>10 L3</th><th>11 R3</th><th>12 ↑</th><th>13 ↓</th><th>14 ←</th><th>15 →</th></tr>
+    <tr><td>ID RetroArch</td><td>2</td><td>3</td><td>14</td><td>15</td><td>4</td><td>5</td><td>6</td><td>7</td></tr>
+  </table>
+  <p>Analógicos: IDs 16/17 (esquerdo X +/−), 18/19 (esquerdo Y +/−), 20–23 (direito), com valores de 0 a 32767 (<code>0x7fff</code>). Até 4 jogadores, na ordem em que os controles aparecem.</p>
+
+  <h4>3. Menu da TV mais esperto (<code>input.js</code>)</h4>
+  <ul>
+    <li>Usa o mesmo <code>readPad</code>, então controles genéricos também navegam no menu.</li>
+    <li>Confere a lista de controles <b>a cada frame</b> em vez de esperar o evento <code>gamepadconnected</code>, que nem sempre dispara (por exemplo, depois de recarregar a página).</li>
+    <li>A barra mostra "sem controle (aperte um botão)" e, ao passar o mouse, o nome e o tipo de cada controle (<code>standard</code> ou <code>genérico</code>).</li>
+  </ul>
+
+  <div class="box ok"><span class="t">Como foi testado</span>
+    Com o jogo rodando, simulamos um controle genérico substituindo <code>navigator.getGamepads</code> no iframe. Apertar o botão 2 (✕ genérico) gerou o ID 0 (✕ do PS1); hat para cima gerou o ID 4 (↑). Soltar os dois enviou 0 para ambos.
+  </div>
+  <div class="box warn"><span class="t">Consequência a conhecer</span>
+    Como a ponte assume o joystick, o remapeamento <b>de joystick</b> feito na tela de controles do EmulatorJS deixa de valer. O teclado continua configurável por lá. Para remapear o joystick, edite o código (Receita 8.5).
+  </div>
+</section>
+
+<!-- ============================ AULA 7 ============================ -->
+<section class="chapter">
+  <h2><span class="num">7</span>Estudo de caso 3: luzes e sombras para dar realismo</h2>
+  <p class="lead">A terceira tarefa foi estética: a sala precisava parecer de verdade. Realismo em 3D vem principalmente de <b>luz motivada</b> (toda luz tem uma fonte visível ou plausível) e de <b>sombras</b> que "assentam" os objetos no chão.</p>
+
+  <h3>Conceitos rápidos de iluminação no Three.js</h3>
+  <table>
+    <tr><th style="width:25%">Tipo de luz</th><th>Como se comporta</th><th style="width:30%">Usada aqui como</th></tr>
+    <tr><td><code>HemisphereLight</code></td><td>Luz ambiente suave: uma cor vinda de cima e outra de baixo. Não faz sombra.</td><td>Preenchimento bem fraco (0,18)</td></tr>
+    <tr><td><code>PointLight</code></td><td>Lâmpada que ilumina em todas as direções. Sombra em 6 direções (mais cara).</td><td>Abajur e brilho pontual da tela</td></tr>
+    <tr><td><code>DirectionalLight</code></td><td>Raios paralelos, como o sol ou a lua. Sombra barata e nítida.</td><td>Luar azulado pela "janela"</td></tr>
+    <tr><td><code>RectAreaLight</code></td><td>Painel retangular que emite luz suave. <b>Não faz sombra</b>.</td><td>A superfície da tela da TV</td></tr>
+  </table>
+
+  <h3>O que foi montado (<code>tv-scene.js</code> → <code>_buildScene</code>)</h3>
+  <ol class="steps">
+    <li><b>Abajur de chão</b> (<code>_buildFloorLamp</code>) no canto esquerdo: base, haste, cúpula de tecido translúcida (material com <code>emissive</code>, que brilha sozinho) e lâmpada. Dentro dela, uma <code>PointLight</code> quente (<code>0xffb46b</code>, intensidade 2,4) que <b>projeta sombras</b>. A cúpula não projeta sombra, senão bloquearia a própria luz.</li>
+    <li><b>Luar</b>: <code>DirectionalLight</code> azulada (<code>0x8fa6ff</code>, 0,55) vinda da direita e do alto, com sombras longas na parede. O contraste quente × frio é um truque clássico de fotografia.</li>
+    <li><b>Luz da tela</b>: um <code>RectAreaLight</code> do tamanho da tela, apontado para a frente, mais uma <code>PointLight</code> com sombra. A cor vem da <b>imagem atual</b>: a cada 4 frames o canvas da tela é reduzido para 8×6 pixels e a média das cores é calculada (<code>_updateScreenGlow</code>). Uma leve tremulação imita o CRT. Durante o jogo, a imagem está no iframe e não pode ser lida, então usamos um azulado que varia devagar.</li>
+    <li><b>Sombras em tudo que é sólido</b>: TV, PS1, cabo e rack recebem <code>castShadow</code> e <code>receiveShadow</code> via <code>traverse</code>. Tela, vidro e peças transparentes ficam de fora.</li>
+    <li><b>Ambiente</b>: textura de reboco na parede, rodapé e um tapete. Superfícies com textura deixam a luz e a sombra mais "legíveis".</li>
+  </ol>
+  <p class="file">tv-scene.js: configurando uma sombra (exemplo do abajur)</p>
+<pre><span class="k">this</span>.lampLight = <span class="k">new</span> THREE.PointLight(0xffb46b, 2.4, 0, 2); <span class="c">// cor, intensidade, alcance (0 = infinito), decaimento físico</span>
+<span class="k">this</span>.lampLight.castShadow = <span class="k">true</span>;
+<span class="k">this</span>.lampLight.shadow.mapSize.set(1024, 1024);   <span class="c">// resolução da sombra (maior = mais nítida e mais pesada)</span>
+<span class="k">this</span>.lampLight.shadow.bias = -0.0015;             <span class="c">// evita "listras" (shadow acne)</span>
+<span class="k">this</span>.lampLight.shadow.normalBias = 0.02;          <span class="c">// idem, em superfícies inclinadas</span></pre>
+
+  <div class="box prof"><span class="t">Vocabulário: shadow acne e peter-panning</span>
+    <b>Shadow acne</b> são listras ou manchas escuras quando a superfície "faz sombra em si mesma". Corrige-se com <code>bias</code> negativo ou <code>normalBias</code> positivo. Exagerar causa <b>peter-panning</b>: a sombra "descola" do objeto, que parece flutuar. Ajuste em passos pequenos.
+  </div>
+  <div class="box ok"><span class="t">Verificação</span>
+    A cena foi aberta no Chrome, ligada e levada até o jogo, sem erros no console. A primeira versão deixava a cúpula estourada e grande demais em primeiro plano; o abajur foi afastado para o canto (<code>-1.2, 0, -0.38</code>) e o brilho da cúpula reduzido (<code>emissiveIntensity</code> 0,35).
+  </div>
+</section>
+
+<!-- ============================ AULA 8 ============================ -->
+<section class="chapter">
+  <h2><span class="num">8</span>Receitas de manutenção</h2>
+  <p class="lead">Receitas curtas para as alterações mais prováveis. Siga o passo a passo e teste ao final.</p>
+
+  <h4>8.1 Aceitar um novo formato de jogo</h4>
+  <ol>
+    <li>Em <code>GameLibraryService.cs</code>, adicione a extensão em <code>GameExtensions</code>.</li>
+    <li>Confirme que o EmulatorJS (core <code>psx</code>) aceita o formato.</li>
+    <li><code>dotnet run</code> e confira em <code>/api/games</code> se o jogo aparece.</li>
+  </ol>
+
+  <h4>8.2 Mudar as pastas de jogos ou BIOS</h4>
+  <p>Edite <code>GamesFolder</code>/<code>BiosFolder</code> no <code>appsettings.json</code>. Caminhos absolutos funcionam (ex.: <code>"E:\\Roms\\PS1"</code>, com barra dupla no JSON). Reinicie o servidor.</p>
+
+  <h4>8.3 Mudar tempos do boot, câmera e menu</h4>
+  <ul>
+    <li>Durações: <code>DURATION</code> no topo de <code>tv-scene.js</code> (<code>TV_ON</code>, <code>SONY</code>, <code>PS_LOGO</code>, <code>LOADING</code>).</li>
+    <li>Posição inicial da câmera: <code>ROOM_CAMERA</code>. Limites de giro e zoom: <code>this.controls.min/max…</code> em <code>_buildRenderer</code>.</li>
+    <li>Visual do menu: <code>menu()</code> e a constante <code>MENU</code> em <code>boot-screens.js</code>.</li>
+  </ul>
+
+  <h4>8.4 Rodar sem internet</h4>
+  <ol>
+    <li>Baixe a release do EmulatorJS e extraia em <code>wwwroot/emulatorjs/</code>.</li>
+    <li>Em <code>appsettings.json</code>: <code>"EmulatorJsDataPath": "/emulatorjs/data/"</code>.</li>
+    <li>Baixe <code>three.module.js</code> e a pasta <code>examples/jsm</code> do Three.js 0.160.0 para <code>wwwroot/lib/three/</code> e ajuste o <code>importmap</code> em <code>App.razor</code>.</li>
+  </ol>
+
+  <h4>8.5 Trocar o mapeamento de botões do joystick</h4>
+  <ul>
+    <li><b>Controle genérico com botões trocados:</b> ajuste <code>GENERIC_FACE</code> em <code>pad-map.js</code>. Cada posição é [✕, ○, □, △] e o valor é o número do botão no seu controle. Para descobrir os números, abra o console (<span class="kbd">F12</span>), aperte um botão e rode:
+<pre>navigator.getGamepads()[0].buttons.map((b, i) =&gt; b.pressed ? i : null).filter(i =&gt; i !== null)</pre></li>
+    <li><b>Mudar o que cada botão faz no jogo:</b> altere a tabela <code>RETRO</code> no <code>player.html</code> (veja a tabela da Aula 6).</li>
+    <li><b>Mudar os botões do menu da TV:</b> constante <code>BTN</code> em <code>input.js</code>.</li>
+  </ul>
+
+  <h4>8.6 Ajustar luzes e sombras</h4>
+  <table>
+    <tr><th style="width:32%">Quero…</th><th>Onde mexer (<code>tv-scene.js</code>)</th></tr>
+    <tr><td>Sala mais clara ou escura</td><td><code>r.toneMappingExposure</code> (0,9) em <code>_buildRenderer</code>; intensidade da <code>HemisphereLight</code> (0,18).</td></tr>
+    <tr><td>Abajur mais forte ou mais quente</td><td><code>new THREE.PointLight(0xffb46b, 2.4, …)</code>: cor e intensidade.</td></tr>
+    <tr><td>Mudar o abajur de lugar</td><td><code>lampPos</code> (x, y, z). A luz acompanha automaticamente.</td></tr>
+    <tr><td>Luar mais ou menos visível</td><td><code>new THREE.DirectionalLight(0x8fa6ff, 0.55)</code> e <code>moon.position</code>.</td></tr>
+    <tr><td>Tela iluminando mais a sala</td><td>Em <code>_updateScreenGlow</code>: <code>level * 5</code> (área) e <code>level * 0.9</code> (pontual).</td></tr>
+    <tr><td>Sombras mais nítidas</td><td>Aumente <code>shadow.mapSize</code> (ex.: 2048). Custa desempenho.</td></tr>
+    <tr><td>Melhorar o desempenho</td><td>Desligue a sombra da luz da tela (<code>this.screenLight.castShadow = false</code>), reduza <code>mapSize</code> ou, em último caso, <code>r.shadowMap.enabled = false</code>.</td></tr>
+  </table>
+
+  <h4>8.7 Adicionar um objeto à sala (com sombra)</h4>
+<pre><span class="k">const</span> vaso = <span class="k">new</span> THREE.Mesh(
+    <span class="k">new</span> THREE.CylinderGeometry(0.06, 0.05, 0.2, 24),
+    <span class="k">new</span> THREE.MeshStandardMaterial({ color: 0x2f5d50, roughness: 0.4 }));
+vaso.position.set(0.45, 0.6 + 0.1, 0.1);   <span class="c">// em cima do rack (tampo em y = 0.6)</span>
+vaso.castShadow = <span class="k">true</span>;
+vaso.receiveShadow = <span class="k">true</span>;
+<span class="k">this</span>.scene.add(vaso);                      <span class="c">// coloque no fim de _buildRoom()</span></pre>
+  <p>Unidades em <b>metros</b>; o eixo Y é a altura; a parede fica em <code>z = -0.75</code>. Use <code>MeshStandardMaterial</code> (reage a todas as luzes, inclusive a <code>RectAreaLight</code>).</p>
+
+  <h4>8.8 Atualizar o Three.js</h4>
+  <p>Troque a versão nas duas linhas do <code>importmap</code> em <code>App.razor</code>. <b>Atenção:</b> entre versões, nomes de addons e o cálculo de intensidade das luzes podem mudar. Teste a cena inteira (ligar, boot, menu, jogo) depois de atualizar.</p>
+
+  <h4>8.9 Checklist depois de qualquer mudança</h4>
+  <ol>
+    <li><code>dotnet build</code> sem erros.</li>
+    <li>Abrir a página com o console aberto (<span class="kbd">F12</span>) e verificar se não há erros vermelhos.</li>
+    <li>Ligar a TV, ver o boot, navegar no menu com teclado <b>e</b> joystick.</li>
+    <li>Abrir um jogo <code>.chd</code> e um <code>.cue</code>; testar Esc, tela cheia e Select + Start.</li>
+  </ol>
+</section>
+
+<!-- ============================ AULA 9 ============================ -->
+<section class="chapter">
+  <h2><span class="num">9</span>Diagnóstico de problemas</h2>
+  <p class="lead">Quando algo der errado, siga esta tabela antes de alterar código. A maioria dos problemas está em arquivos ou no navegador, não no projeto.</p>
+  <table>
+    <tr><th style="width:27%">Sintoma</th><th style="width:33%">Causa provável</th><th>O que fazer</th></tr>
+    <tr><td>Jogo não aparece no menu</td><td>Extensão não suportada; arquivo em subpasta.</td><td>Coloque o arquivo direto em <code>Jogos/</code>; confira <code>/api/games</code>; veja a Receita 8.1.</td></tr>
+    <tr><td>Jogo aparece mas não inicia</td><td>Arquivos <code>.bin</code> faltando ou com nome diferente do citado no <code>.cue</code>.</td><td>Abra o <code>.cue</code> no Bloco de Notas e confira os nomes nas linhas <code>FILE</code>. Teste <code>/api/cue-zip/NOME.zip</code> no navegador.</td></tr>
+    <tr><td>Jogo antigo .cue continua com erro após trocar o .bin</td><td>Zip antigo no cache.</td><td>Apague <code>%TEMP%\PlataformaOnline\cue-zip\</code>.</td></tr>
+    <tr><td>"Não foi possível carregar o EmulatorJS"</td><td>Sem internet ou CDN fora do ar.</td><td>Verifique a conexão ou use a Receita 8.4.</td></tr>
+    <tr><td>Barra mostra "sem controle"</td><td>O navegador só revela o joystick após um botão ser apertado.</td><td>Clique na página e aperte um botão do controle. Teste em <code>https://hardwaretester.com/gamepad</code>.</td></tr>
+    <tr><td>Controle detectado, mas botões trocados</td><td>Controle genérico com outra ordem de botões.</td><td>Receita 8.5 (<code>GENERIC_FACE</code>).</td></tr>
+    <tr><td>Direcional não funciona no jogo</td><td>Hat do controle num eixo diferente do 9.</td><td>No console, observe <code>navigator.getGamepads()[0].axes</code> enquanto aperta o direcional e ajuste o índice em <code>readPad</code>.</td></tr>
+    <tr><td>Controle não funciona via IP da rede (ex.: <code>http://192.168…</code>)</td><td>A Gamepad API exige contexto seguro (HTTPS ou localhost).</td><td>Use <code>localhost</code> ou o perfil <code>https</code> (<code>dotnet run --launch-profile https</code>).</td></tr>
+    <tr><td>Cena lenta ou travando</td><td>Sombras e resolução altas para a placa de vídeo.</td><td>Receita 8.6, linha "Melhorar o desempenho".</td></tr>
+    <tr><td>Listras escuras nas superfícies</td><td>Shadow acne.</td><td>Ajuste <code>bias</code>/<code>normalBias</code> da luz responsável (Aula 7).</td></tr>
+    <tr><td>Iframe do jogo "desalinhado" da tela</td><td>Mudança no tamanho da tela da TV sem atualizar <code>screenSize</code>.</td><td>Em <code>createLgTv()</code>, mantenha <code>screenSize</code> igual a <code>screenW</code>/<code>screenH</code>.</td></tr>
+    <tr><td><code>dotnet</code> reclama do SDK</td><td><code>global.json</code> pede 8.0.302.</td><td>Não instale outro SDK; confira com <code>dotnet --list-sdks</code>.</td></tr>
+  </table>
+  <div class="box prof"><span class="t">Método geral de depuração</span>
+    <ol>
+      <li><b>Reproduza</b> o problema de forma confiável.</li>
+      <li><b>Isole</b> a camada: servidor (abra a URL da API direto), página (console F12) ou emulador (console do iframe).</li>
+      <li><b>Leia</b> a mensagem de erro inteira e o código da peça envolvida, inclusive de bibliotecas, como fizemos com o EmulatorJS.</li>
+      <li><b>Mude uma coisa por vez</b> e teste de novo.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============================ AULA 10 ============================ -->
+<section class="chapter">
+  <h2><span class="num">10</span>Exercícios e glossário</h2>
+  <p class="lead">Aprender é fazer. Os exercícios vão do mais simples ao mais desafiador e, juntos, passam por todas as camadas do projeto.</p>
+
+  <h3>Exercícios</h3>
+  <ol class="steps">
+    <li><b>Aquecimento:</b> mude a cor do LED do PS1 de verde para azul. <i>Dica:</i> <code>ledMat</code> em <code>createPlayStation()</code>.</li>
+    <li><b>Servidor:</b> faça <code>SizeBytes</code> de jogos <code>.cue</code> somar o tamanho de todos os <code>.bin</code> citados. <i>Dica:</i> reaproveite a leitura das linhas <code>FILE</code> de <code>GetCueZip</code> extraindo-a para um método.</li>
+    <li><b>Iluminação:</b> faça a cúpula do abajur apagar ou acender com a tecla <span class="kbd">L</span>, mexendo em <code>lampLight.intensity</code> e <code>lampShadeMat.emissiveIntensity</code>.</li>
+    <li><b>Menu:</b> mostre no menu o tamanho de cada jogo em MB. <i>Dica:</i> <code>sizeBytes</code> já chega no JavaScript.</li>
+    <li><b>Joystick:</b> faça a combinação Select + ○ do controle sair do jogo e voltar ao menu (hoje só o Esc e o botão MENU fazem isso). <i>Dica:</i> na ponte do <code>player.html</code>, envie <code>parent.postMessage({ source: 'ps1-player', type: 'back' }, location.origin)</code> ao detectar Select + ○.</li>
+    <li><b>Desafio:</b> adicione uma janela 3D na parede direita, de onde o luar "entra", e posicione a <code>DirectionalLight</code> alinhada a ela.</li>
+  </ol>
+
+  <h3>Glossário</h3>
+  <table>
+    <tr><th style="width:24%">Termo</th><th>Significado</th></tr>
+    <tr><td>Blazor (InteractiveServer)</td><td>Framework .NET para páginas web. Neste modo, a lógica do componente roda no servidor e conversa com o navegador por uma conexão em tempo real.</td></tr>
+    <tr><td>BIOS / HLE</td><td>O "sistema" do console. HLE (<i>High-Level Emulation</i>) é uma BIOS imitada pelo emulador.</td></tr>
+    <tr><td>.cue / .bin</td><td>Índice em texto do disco / dados brutos das trilhas.</td></tr>
+    <tr><td>.chd</td><td>Formato compactado de imagens de disco (MAME). Um arquivo por jogo.</td></tr>
+    <tr><td>CDN</td><td>Servidor público que entrega bibliotecas (Three.js, EmulatorJS).</td></tr>
+    <tr><td>iframe</td><td>Uma página dentro de outra página.</td></tr>
+    <tr><td>postMessage</td><td>Forma segura de duas janelas (página e iframe) trocarem mensagens.</td></tr>
+    <tr><td>Gamepad API</td><td>API do navegador para ler joysticks.</td></tr>
+    <tr><td>Mapping "standard"</td><td>Layout de botões padronizado pelo navegador; o oposto é o "genérico".</td></tr>
+    <tr><td>Hat switch</td><td>Direcional que o controle informa como um único eixo com 8 posições.</td></tr>
+    <tr><td>RetroArch / core</td><td>Base do EmulatorJS; o core <code>psx</code> é o emulador de PlayStation.</td></tr>
+    <tr><td>Shader</td><td>Pequeno programa que roda na placa de vídeo para colorir pixels.</td></tr>
+    <tr><td>Shadow map</td><td>Técnica de sombra: a cena é renderizada do ponto de vista da luz para saber o que está "escondido".</td></tr>
+    <tr><td>Emissive</td><td>Propriedade de material que faz o objeto parecer emitir luz própria.</td></tr>
+    <tr><td>Tone mapping</td><td>Conversão das cores calculadas para a faixa que o monitor exibe (aqui, ACES Filmic).</td></tr>
+    <tr><td>Range request</td><td>Download de um arquivo em partes, útil para arquivos grandes.</td></tr>
+  </table>
+
+  <div class="box recap"><span class="t">Palavra final do professor</span>
+    Este projeto tem uma divisão clara de responsabilidades: o <b>servidor</b> cuida dos arquivos, a <b>cena</b> cuida do visual e o <b>emulador</b> cuida do jogo. Quando for alterar algo, pergunte primeiro: "em qual dessas camadas está o que eu quero mudar?". Na maioria das vezes, a resposta leva direto ao arquivo certo.
+  </div>
+</section>
+
+</body>
+</html>

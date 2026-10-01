@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PlayStation</title>
+    <style>
+        html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+        #game { width: 100%; height: 100%; }
+        #error { color: #ffb4b4; font: 16px Arial, sans-serif; padding: 24px; display: none; }
+    </style>
+</head>
+<body>
+    <div id="game"></div>
+    <div id="error"></div>
+    <script type="module">
+        // Ponte de joystick: o leitor interno do EmulatorJS só entende o layout "standard" e não enxerga
+        // controles genéricos (D-pad no hat/eixos). Aqui o controle é lido via pad-map.js e enviado
+        // direto ao core, no layout do PS1 (✕ ○ □ △).
+        import { listPads, readPad } from './js/pad-map.js';
+
+        // índice standard -> id do RetroArch usado pelo simulateInput do EmulatorJS
+        // (0 = B/✕, 1 = Y/□, 2 = Select, 3 = Start, 4..7 = D-pad, 8 = A/○, 9 = X/△, 10..15 = L/R/L2/R2/L3/R3).
+        const RETRO = [0, 8, 1, 9, 10, 11, 12, 13, 2, 3, 14, 15, 4, 5, 6, 7];
+        const MAX_PLAYERS = 4;
+        const sent = [];
+        let ejsHandlerStopped = false;
+
+        function pads() {
+            const own = listPads();
+            if (own.length) return own;
+            // Se o iframe não recebe o joystick, usa o que a página da TV (mesma origem) está vendo.
+            try { return parent !== window ? listPads(parent.navigator) : []; } catch { return []; }
+        }
+
+        function send(gm, player, id, value) {
+            const state = sent[player] ??= {};
+            if (state[id] === value) return;
+            state[id] = value;
+            gm.simulateInput(player, id, value);
+        }
+
+        function axisPair(gm, player, idPos, idNeg, v) {
+            send(gm, player, idPos, v > 0 ? Math.round(0x7fff * v) : 0);
+            send(gm, player, idNeg, v < 0 ? Math.round(-0x7fff * v) : 0);
+        }
+
+        function tick() {
+            requestAnimationFrame(tick);
+            const emu = window.EJS_emulator;
+            const gm = emu?.gameManager;
+            if (!emu?.started || !gm) return;
+
+            if (!ejsHandlerStopped && emu.gamepad) {
+                emu.gamepad.terminate();   // evita entrada dobrada/conflitante com o leitor interno
+                ejsHandlerStopped = true;
+            }
+
+            const list = pads().sort((a, b) => a.index - b.index).slice(0, MAX_PLAYERS);
+            for (let player = 0; player < MAX_PLAYERS; player++) {
+                const pad = list[player];
+                if (!pad) {
+                    // Controle desconectado: solta tudo que estava pressionado.
+                    for (const id in sent[player] ?? {}) send(gm, player, +id, 0);
+                    continue;
+                }
+                const s = readPad(pad);
+                s.buttons.forEach((on, i) => send(gm, player, RETRO[i], on ? 1 : 0));
+                axisPair(gm, player, 16, 17, s.lx);
+                axisPair(gm, player, 18, 19, s.ly);
+                axisPair(gm, player, 20, 21, s.rx);
+                axisPair(gm, player, 22, 23, s.ry);
+            }
+        }
+        requestAnimationFrame(tick);
+    </script>
+    <script>
+        // Página do emulador carregada no iframe da TV: player.html?game=<url>&bios=<url>&title=<nome>&data=<pasta do EmulatorJS>
+        (function () {
+            const params = new URLSearchParams(location.search);
+            const game = params.get('game');
+            const post = (type) => parent !== window && parent.postMessage({ source: 'ps1-player', type }, location.origin);
+
+            if (!game) {
+                const err = document.getElementById('error');
+                err.textContent = 'Nenhum jogo informado.';
+                err.style.display = 'block';
+                return;
+            }
+
+            const dataPath = params.get('data') || 'https://cdn.emulatorjs.org/stable/data/';
+
+            window.EJS_player = '#game';
+            window.EJS_core = 'psx';
+            window.EJS_gameUrl = game;
+            window.EJS_gameName = params.get('title') || 'PlayStation';
+            window.EJS_pathtodata = dataPath;
+            window.EJS_startOnLoaded = true;
+            window.EJS_color = '#a50034';
+            window.EJS_language = 'pt-BR';
+            window.EJS_backgroundColor = '#000000';
+            window.EJS_defaultOptions = { 'shader': 'disabled' };
+            if (params.get('bios')) window.EJS_biosUrl = params.get('bios');
+
+            window.EJS_ready = () => post('ready');
+            window.EJS_onGameStart = () => post('ready');
+
+            // Esc volta ao menu da TV.
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !document.fullscreenElement) {
+                    e.preventDefault();
+                    post('back');
+                }
+            }, true);
+
+            const s = document.createElement('script');
+            s.src = dataPath + 'loader.js';
+            s.onerror = () => {
+                const err = document.getElementById('error');
+                err.textContent = 'Não foi possível carregar o EmulatorJS de ' + dataPath;
+                err.style.display = 'block';
+            };
+            document.body.appendChild(s);
+        })();
+    </script>
+</body>
+</html>

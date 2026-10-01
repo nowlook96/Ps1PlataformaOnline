@@ -1,0 +1,53 @@
+﻿PLATAFORMAONLINE - MODO APRESENTAÇÃO
+====================================
+
+PREPARAR O NOTEBOOK (uma vez só)
+--------------------------------
+1. Atualize o Windows (Configurações > Windows Update) e mantenha o Windows Defender ligado.
+2. Instale o ASP.NET Core Runtime 8 (abra o PowerShell):
+       winget install Microsoft.DotNet.AspNetCore.8
+3. Instale o túnel da Cloudflare:
+       winget install --id Cloudflare.cloudflared
+4. Copie esta pasta inteira para o notebook (ex.: C:\PlataformaOnline).
+   Coloque os jogos em Jogos\ e, se tiver, a BIOS em Bios\.
+5. Energia: em "Ao fechar a tampa", escolha "Não fazer nada" e deixe o carregador ligado.
+   (Enquanto o script roda, ele já impede o Windows de suspender.)
+
+NO DIA DA APRESENTAÇÃO
+----------------------
+1. Dê dois cliques em iniciar-apresentacao.bat.
+2. Espere aparecer "PRONTO". O link já fica copiado (Ctrl+V para colar).
+3. Envie o link SÓ para o seu público.
+4. Ao terminar, volte à janela e pressione ENTER. O site e o link deixam de existir.
+
+O QUE PROTEGE O SITE
+--------------------
+- Nenhuma porta é aberta: o site só escuta em 127.0.0.1 (o próprio notebook).
+  Não mexa no roteador nem no firewall; não é preciso.
+- Todo acesso externo passa pelo túnel HTTPS da Cloudflare (criptografado e
+  com proteção contra ataques de volume da própria Cloudflare).
+- Chave aleatória nova a cada execução: sem o link completo, a pessoa só vê
+  "Acesso restrito". A chave é trocada por um cookie seguro e some da barra de endereço.
+- Limite de 300 requisições por minuto por visitante (barra robôs e força bruta).
+- Só aceita os endereços localhost, *.trycloudflare.com e *.ts.net.
+- Cabeçalhos de segurança: CSP (só scripts do próprio site e das CDNs usadas),
+  anti-clickjacking, sem vazamento de Referer, câmera/microfone/localização bloqueados.
+- Modo Produção: erros não mostram detalhes internos; o site não aceita envio de arquivos.
+
+BOAS PRÁTICAS
+-------------
+- Use uma conta de usuário do Windows comum (não administrador) para rodar a apresentação.
+- Não deixe a apresentação ligada sem necessidade. Encerre ao terminar.
+- Se o link vazar, encerre e rode de novo: a nova execução gera outra chave e outro link.
+- Jogos e BIOS ficam acessíveis para quem tem o link. Use só jogos e BIOS seus,
+  de preferência homebrew/demos. Não divulgue o link publicamente.
+- Logs ficam em logs\ (site.log, site-erros.log, tunel.log).
+
+PROBLEMAS
+---------
+- "ASP.NET Core Runtime 8 não instalado"  -> passo 2 da preparação.
+- "cloudflared não encontrado"            -> passo 3 da preparação.
+- "A porta 5080 já está em uso"           -> feche o outro programa ou rode no PowerShell:
+                                             .\iniciar-apresentacao.ps1 -Porta 5090
+- Link não abre logo de cara              -> aguarde até 30 s e recarregue.
+- "Acesso restrito"                       -> o link foi copiado incompleto (precisa do ?chave=...).
