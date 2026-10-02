@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>Arrancada do Porto</title>
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="stylesheet" href="/arrancada/arrancada.css" />
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+</head>
+<body>
+    <div id="game">
+        <div id="view"></div>
+
+        <!-- HUD da corrida -->
+        <div id="hud" class="hud hidden">
+            <div class="hud-top">
+                <div class="hud-progress">
+                    <div class="lane me"><span class="who">VOCÊ</span><div class="track"><i id="bar-me"></i></div></div>
+                    <div class="lane opp"><span class="who" id="hud-opp-name">RIVAL</span><div class="track"><i id="bar-opp"></i></div></div>
+                </div>
+                <div id="hud-tree" class="hud-tree">
+                    <span class="bulb stage"></span><span class="bulb amber"></span><span class="bulb amber"></span>
+                    <span class="bulb amber"></span><span class="bulb green"></span><span class="bulb red"></span>
+                </div>
+                <div class="hud-time"><small>TEMPO</small><b id="hud-timer">0.000</b></div>
+            </div>
+            <div id="hud-msg" class="hud-msg"></div>
+            <div id="hud-help" class="hud-help"></div>
+            <canvas id="tach" class="tach"></canvas>
+            <div class="touch">
+                <button id="touch-shift" class="tbtn shift">MARCHA</button>
+                <button id="touch-throttle" class="tbtn throttle">ACELERAR</button>
+            </div>
+        </div>
+
+        <!-- Telas -->
+        <section id="screen-loading" class="screen loading">
+            <div class="logo"><span>ARRANCADA</span><em>DO PORTO</em></div>
+            <div class="loader"><i></i></div>
+            <p id="loading-text">Carregando a pista...</p>
+        </section>
+
+        <section id="screen-name" class="screen hidden">
+            <div class="panel narrow">
+                <div class="logo small"><span>ARRANCADA</span><em>DO PORTO</em></div>
+                <h2>Quem está no volante?</h2>
+                <p class="muted">Escolha seu nome de piloto. Ele aparece no ranking mundial.</p>
+                <form id="name-form" autocomplete="off">
+                    <input id="name-input" maxlength="16" minlength="3" required placeholder="Seu nome" spellcheck="false" />
+                    <button class="btn primary" type="submit">ENTRAR NAS RUAS</button>
+                </form>
+                <p id="name-error" class="error"></p>
+            </div>
+        </section>
+
+        <section id="screen-menu" class="screen hidden">
+            <div class="menu-left">
+                <div class="logo small"><span>ARRANCADA</span><em>DO PORTO</em></div>
+                <div class="profile">
+                    <div class="pname" id="m-name">—</div>
+                    <div class="stats">
+                        <div><small>RESPEITO</small><b id="m-respect">0</b></div>
+                        <div><small>RANKING</small><b id="m-rank">#—</b></div>
+                        <div><small>VITÓRIAS</small><b id="m-wins">0</b></div>
+                        <div><small>MELHOR ET</small><b id="m-best">—</b></div>
+                    </div>
+                </div>
+                <nav class="menu-list">
+                    <button class="mitem" data-go="race">CORRER</button>
+                    <button class="mitem" data-go="garage">GARAGEM <em>EM BREVE</em></button>
+                    <button class="mitem" data-go="shop">OFICINA <em>EM BREVE</em></button>
+                    <button class="mitem" data-go="ranking">RANKING MUNDIAL</button>
+                    <button class="mitem" data-go="switch">TROCAR PILOTO</button>
+                    <button class="mitem" data-go="room">VOLTAR PARA A SALA</button>
+                </nav>
+            </div>
+            <div class="menu-car">
+                <div class="car-name" id="m-car">—</div>
+                <div class="car-desc" id="m-car-desc"></div>
+                <p class="credits">Modelos 3D (CC-BY 3.0, Blend Swap): “BMW M4 F82” por CuRvEmAsTeR #16463 · “Ford Mustang” por jlrazr #17034.
+                    <a href="/arrancada/modelos/CREDITOS.txt" target="_blank" rel="noopener">Créditos</a></p>
+            </div>
+        </section>
+
+        <section id="screen-opponents" class="screen hidden">
+            <div class="panel wide">
+                <h2>ESCOLHA SEU RIVAL</h2>
+                <div id="opp-list" class="cards"></div>
+                <button class="btn ghost" data-back>VOLTAR</button>
+            </div>
+        </section>
+
+        <section id="screen-garage" class="screen hidden">
+            <div class="panel wide">
+                <h2 id="garage-title">GARAGEM</h2>
+                <p class="muted" id="garage-sub"></p>
+                <div id="garage-list" class="cards"></div>
+                <button class="btn ghost" data-back>VOLTAR</button>
+            </div>
+        </section>
+
+        <section id="screen-ranking" class="screen hidden">
+            <div class="panel">
+                <h2>RANKING MUNDIAL DE RESPEITO</h2>
+                <table class="rank"><thead><tr><th>#</th><th>PILOTO</th><th>RESPEITO</th><th>VITÓRIAS</th><th>MELHOR ET</th></tr></thead>
+                    <tbody id="ranking-body"></tbody></table>
+                <p class="muted" id="ranking-foot"></p>
+                <button class="btn ghost" data-back>VOLTAR</button>
+            </div>
+        </section>
+
+        <section id="intro" class="intro hidden">
+            <div class="intro-card">
+                <small>DESAFIANTE</small>
+                <h1 id="intro-name">NAVALHA</h1>
+                <div id="intro-car"></div>
+                <p id="intro-bio"></p>
+            </div>
+            <div class="intro-skip">ENTER / ✕ para pular</div>
+        </section>
+
+        <section id="screen-result" class="screen hidden">
+            <div class="panel wide result">
+                <h1 id="r-title">VITÓRIA</h1>
+                <p id="r-sub" class="muted"></p>
+                <div class="result-grid">
+                    <table class="times">
+                        <thead><tr><th></th><th>VOCÊ</th><th id="r-opp">RIVAL</th></tr></thead>
+                        <tbody id="r-times"></tbody>
+                    </table>
+                    <div class="respect">
+                        <h3>RESPEITO GANHO</h3>
+                        <ul id="r-lines"></ul>
+                        <div class="total">+<b id="r-gain">0</b></div>
+                        <div class="muted" id="r-total"></div>
+                    </div>
+                </div>
+                <h3>RANKING MUNDIAL</h3>
+                <table class="rank compact"><thead><tr><th>#</th><th>PILOTO</th><th>RESPEITO</th><th>VITÓRIAS</th><th>MELHOR ET</th></tr></thead>
+                    <tbody id="r-ranking"></tbody></table>
+                <div class="actions">
+                    <button class="btn primary" id="r-again">REVANCHE</button>
+                    <button class="btn ghost" id="r-menu">MENU</button>
+                </div>
+            </div>
+        </section>
+
+        <div id="toast" class="toast"></div>
+        <button id="btn-music" class="corner-btn" title="Música (M)">♪</button>
+        <div id="fade" class="fade on"></div>
+    </div>
+
+    <script type="module" src="/arrancada/js/main.js"></script>
+</body>
+</html>

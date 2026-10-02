@@ -1,5 +1,6 @@
 using Microsoft.Extensions.FileProviders;
 using PlataformaOnline.Components;
+using PlataformaOnline.Drag;
 using PlataformaOnline.Security;
 using PlataformaOnline.Services;
 
@@ -9,6 +10,7 @@ builder.AddPlatformSecurity();
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddSingleton<GameLibraryService>();
+builder.AddDragGame();
 
 var app = builder.Build();
 
@@ -23,7 +25,17 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseStaticFiles();
+// Modelos 3D (.glb) dos carros do jogo de arrancada.
+var contentTypes = new Microsoft.AspNetCore.StaticFiles.FileExtensionContentTypeProvider();
+contentTypes.Mappings[".glb"] = "model/gltf-binary";
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    ContentTypeProvider = contentTypes,
+    // Arquivos do site sempre revalidados (ETag → 304 barato): depois de uma atualização ninguém fica com JS velho,
+    // e a física do jogo de arrancada no navegador precisa ser a mesma do servidor.
+    OnPrepareResponse = ctx => ctx.Context.Response.Headers.CacheControl = "no-cache"
+});
 
 var library = app.Services.GetRequiredService<GameLibraryService>();
 
@@ -51,6 +63,9 @@ app.MapGet("/api/cue-zip/{name}.zip", (string name, GameLibraryService lib) =>
         ? Results.File(zip, "application/zip", name + ".zip", enableRangeProcessing: true)
         : Results.NotFound());
 app.MapGet("/api/bios",(GameLibraryService lib) => Results.Ok(new { url = lib.GetBiosUrl() }));
+
+// Jogo de arrancada: página /arrancada e API /api/drag (Drag/).
+app.MapDragGame();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();

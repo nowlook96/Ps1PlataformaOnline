@@ -36,6 +36,18 @@ online, em qualquer lugar, com a mesma sensação do hardware original.
 - 📂 **Biblioteca automática**: os jogos da pasta são listados com capa no menu
 - 🔒 **Pronto para exposição pública** com chave de acesso, rate limit e cabeçalhos de segurança
 
+## 🏁 Arrancada do Porto
+
+Ao lado da TV fica um carrinho do tamanho de um Hot Wheels. Clique nele: a câmera vira, a tela escurece e abre
+um jogo de **arrancada** em 3D (Three.js) com uma BMW Série 3 Touring stance contra o Mustang preto do **Navalha**.
+
+- **Dois botões**: segure **↑/W** para acelerar (deixe o giro na faixa verde) e use **Espaço** para largar na luz
+  verde e trocar de marcha quando as luzes piscarem azul (troca perfeita). Joystick: R2/✕ acelera, R1/□ troca.
+- **Respeito (XP)** a cada corrida, com **ranking mundial** gravado no servidor em JSON. O servidor reexecuta a
+  corrida a partir dos comandos do jogador, então tempo e vencedor não podem ser forjados no navegador.
+- Motor, turbo, blow-off, estouros no escape e trilha de rock são sintetizados em tempo real.
+- Garagem, oficina e novos rivais já estão no catálogo (`Drag/catalog.json`) como **em breve**.
+
 ## 🧱 Tecnologias
 
 | Camada        | Tecnologia                                  |

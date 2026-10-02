@@ -82,6 +82,21 @@ html, body {
 
 .hint.hidden { opacity: 0; }
 
+/* Dica ao passar o mouse no carrinho e escurecimento ao abrir o jogo de arrancada. */
+.car-hint { top: auto; bottom: 90px; background: rgba(20, 10, 0, 0.7); border: 1px solid rgba(255, 140, 40, 0.5); }
+
+.room-fade {
+    position: absolute;
+    inset: 0;
+    background: #000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease-in;
+    z-index: 50;
+}
+
+.room-fade.on { opacity: 1; pointer-events: auto; }
+
 /* Barra de controles estilo controle remoto prata da LG. */
 .remote {
     position: absolute;

@@ -28,6 +28,9 @@ Apresentacao/Bios/
 *.7z
 *.zip
 
+## Dados do jogo de arrancada (pilotos, respeito, ranking)
+Dados/
+
 ## EmulatorJS local (opcional, baixado à parte)
 wwwroot/emulatorjs/
 

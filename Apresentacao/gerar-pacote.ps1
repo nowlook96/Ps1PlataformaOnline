@@ -14,6 +14,14 @@ $ErrorActionPreference = 'Stop'
 $raiz = Split-Path -Parent $PSScriptRoot
 $destino = Join-Path $raiz 'bin\Apresentacao\PlataformaOnline'
 
+# Os pilotos/ranking do jogo de arrancada (Dados\) sobrevivem a um novo pacote.
+$dadosBackup = $null
+$dadosPacote = Join-Path $destino 'Dados'
+if (Test-Path -LiteralPath $dadosPacote) {
+    $dadosBackup = Join-Path ([System.IO.Path]::GetTempPath()) ('PlataformaOnline-Dados-' + [guid]::NewGuid())
+    Copy-Item -LiteralPath $dadosPacote -Destination $dadosBackup -Recurse
+}
+
 if (Test-Path -LiteralPath $destino) { Remove-Item -LiteralPath $destino -Recurse -Force }
 
 Write-Host 'Publicando (Release)...' -ForegroundColor Cyan
@@ -38,6 +46,12 @@ foreach ($pasta in 'Jogos', 'Bios') {
             Where-Object Name -ne '.gitkeep' |
             Copy-Item -Destination $alvo
     }
+}
+
+if ($dadosBackup) {
+    Copy-Item -LiteralPath $dadosBackup -Destination $dadosPacote -Recurse
+    Remove-Item -LiteralPath $dadosBackup -Recurse -Force
+    Write-Host 'Dados do jogo de arrancada (pilotos e ranking) preservados.'
 }
 
 Write-Host ''

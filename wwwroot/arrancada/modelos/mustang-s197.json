@@ -1,0 +1,46 @@
+{
+  "id": "mustang-s197",
+  "length": 4.7752,
+  "width": 1.9801,
+  "height": 1.2235,
+  "frontAxle": 1.4484,
+  "rearAxle": -1.2527,
+  "trackHalf": 0.8083,
+  "wheelRadius": 0.351,
+  "wheelWidth": 0.2499,
+  "wheelOuter": "left",
+  "hasCaliper": true,
+  "exhausts": [
+    [
+      -2.3681,
+      0.3705,
+      0.5713
+    ],
+    [
+      -2.3711,
+      0.3705,
+      -0.6029
+    ]
+  ],
+  "materials": [
+    "aluminio_aros",
+    "ambar",
+    "espejos",
+    "hule",
+    "negro",
+    "pintura_carro",
+    "vidrios",
+    "vidrios_luces",
+    "vidrios_luces_rojas"
+  ],
+  "wheelMaterials": [
+    "aluminio_aros",
+    "hierro",
+    "llantas"
+  ],
+  "triangles": {
+    "body": 110564,
+    "wheel": 19818,
+    "caliper": 252
+  }
+}

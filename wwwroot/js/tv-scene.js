@@ -7,6 +7,7 @@ import { createCrtMaterial } from './crt-shader.js';
 import { InputManager } from './input.js';
 import { padName } from './pad-map.js';
 import { RectAreaLightUniformsLib } from 'three/addons/lights/RectAreaLightUniformsLib.js';
+import { createCarModel } from '../arrancada/js/cars/index.js';
 
 const State = {
     OFF: 'OFF', TV_ON: 'TV_ON', SONY: 'SONY', PS_LOGO: 'PS_LOGO',
@@ -167,6 +168,26 @@ class TvApp {
         this.ps.group.rotation.y = 0.08;
         scene.add(this.ps.group);
 
+        // Carrinho em escala 1:64 (tamanho Hot Wheels) da BMW stance ao lado da TV: abre o jogo de arrancada.
+        // O modelo (.glb) chega pela rede; a área de clique já funciona antes disso.
+        this.miniCarPos = new THREE.Vector3(0.47, rackTop + 0.0005, 0.12);
+        createCarModel('bmw-m4', { paint: '#eef0f2', stance: { rideDrop: 0.06, camberDeg: -6.5, wheelOffset: 0.03 } })
+            .then(model => {
+                if (!this.renderer) return;
+                const mini = model.root;
+                mini.scale.setScalar(1 / 64);
+                mini.position.copy(this.miniCarPos);
+                mini.rotation.y = -Math.PI / 2 + 0.55;
+                mini.traverse(o => { if (o.isMesh && !o.material.transparent) o.castShadow = o.receiveShadow = true; });
+                scene.add(mini);
+            })
+            .catch(e => console.warn('Carrinho não carregou:', e));
+        // Área de clique maior que o carrinho (invisível).
+        this.miniHit = new THREE.Mesh(new THREE.BoxGeometry(0.11, 0.05, 0.07), new THREE.MeshBasicMaterial({ visible: false }));
+        this.miniHit.position.set(0.47, rackTop + 0.022, 0.12);
+        this.miniHit.rotation.y = -Math.PI / 2 + 0.55;   // mesma rotação do carrinho
+        scene.add(this.miniHit);
+
         // Cabo AV do PS1 até a traseira da TV.
         const cable = new THREE.CatmullRomCurve3([
             new THREE.Vector3(-0.18, 0.33, -0.02),
@@ -295,9 +316,21 @@ class TvApp {
             this._pointerDown = null;
             if (moved < 6) this._handleSceneClick(e);
         };
+        // Passar o mouse no carrinho: cursor de clique e dica.
+        this._onPointerMove = e => {
+            if (this.leaving || e.buttons) return;
+            const over = this._raycast(e, [this.miniHit]).length > 0;
+            if (over === this._overMini) return;
+            this._overMini = over;
+            canvas.style.cursor = over ? 'pointer' : '';
+            this.carHint.classList.toggle('hidden', !over);
+        };
         const canvas = this.renderer.domElement;
+        this.carHint = this.stage.querySelector('#car-hint');
+        this.roomFade = this.stage.querySelector('#room-fade');
         canvas.addEventListener('pointerdown', this._onPointerDown);
         canvas.addEventListener('pointerup', this._onPointerUp);
+        canvas.addEventListener('pointermove', this._onPointerMove);
 
         // Mensagens do iframe do emulador.
         this._onMessage = e => {
@@ -315,17 +348,24 @@ class TvApp {
         document.addEventListener('fullscreenchange', this._onFsChange);
     }
 
-    _handleSceneClick(e) {
+    _raycast(e, objects) {
         const rect = this.renderer.domElement.getBoundingClientRect();
         const ndc = new THREE.Vector2(
             ((e.clientX - rect.left) / rect.width) * 2 - 1,
             -((e.clientY - rect.top) / rect.height) * 2 + 1);
         this.raycaster.setFromCamera(ndc, this.camera);
-        const hits = this.raycaster.intersectObjects([this.tv.powerButton, this.ps.powerBtn, this.tv.screen], false);
+        return this.raycaster.intersectObjects(objects, false);
+    }
+
+    _handleSceneClick(e) {
+        if (this.leaving) return;
+        const hits = this._raycast(e, [this.tv.powerButton, this.ps.powerBtn, this.tv.screen, this.miniHit]);
         if (!hits.length) return;
         const hit = hits[0];
 
-        if (hit.object === this.tv.powerButton || hit.object === this.ps.powerBtn) {
+        if (hit.object === this.miniHit) {
+            this.openDragGame();
+        } else if (hit.object === this.tv.powerButton || hit.object === this.ps.powerBtn) {
             this.togglePower();
         } else if (hit.object === this.tv.screen && this.state === State.MENU && hit.uv) {
             const i = this.painter.itemAtUv(hit.uv.x, hit.uv.y);
@@ -384,6 +424,44 @@ class TvApp {
         this._closeEmulator();
         this._moveCamera(ROOM_CAMERA.pos, ROOM_CAMERA.target);
         this._setState(State.MENU);
+    }
+
+    /** Vira a câmera para o carrinho, escurece a tela e carrega o jogo de arrancada (/arrancada). */
+    openDragGame() {
+        if (this.leaving) return;
+        this.leaving = true;
+        this._ensureAudio();
+        if (this.state === State.PLAYING || this.state === State.LOADING) this._closeEmulator();
+        this.carHint.classList.add('hidden');
+        this.renderer.domElement.style.cursor = '';
+
+        const car = this.miniCarPos;
+        const side = new THREE.Vector3(0.13, 0.035, 0.2);
+        this._moveCamera(car.clone().add(side), car.clone().add(new THREE.Vector3(0, 0.018, 0)));
+        this.cameraTween.duration = 1.4;
+        this._revSound();
+        setTimeout(() => this.roomFade.classList.add('on'), 900);
+        setTimeout(() => { location.href = '/arrancada'; }, 1800);
+    }
+
+    /** Ronco curto de motor ao abrir o jogo (sintetizado). */
+    _revSound() {
+        const ac = this.audio;
+        if (!ac) return;
+        const t = ac.currentTime;
+        const o = ac.createOscillator(), g = ac.createGain(), f = ac.createBiquadFilter();
+        o.type = 'sawtooth';
+        o.frequency.setValueAtTime(45, t);
+        o.frequency.exponentialRampToValueAtTime(260, t + 0.6);
+        o.frequency.exponentialRampToValueAtTime(70, t + 1.4);
+        f.type = 'lowpass';
+        f.frequency.value = 900;
+        g.gain.setValueAtTime(0, t);
+        g.gain.linearRampToValueAtTime(0.18, t + 0.08);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + 1.6);
+        o.connect(f).connect(g).connect(ac.destination);
+        o.start(t);
+        o.stop(t + 1.7);
     }
 
     _openEmulator(game) {
@@ -655,6 +733,7 @@ class TvApp {
         window.removeEventListener('message', this._onMessage);
         document.removeEventListener('fullscreenchange', this._onFsChange);
         for (const [el, fn] of this._clicks) el.removeEventListener('click', fn);
+        this.renderer.domElement.removeEventListener('pointermove', this._onPointerMove);
         this.iframe.src = 'about:blank';
         this.controls.dispose();
         this.renderer.dispose();

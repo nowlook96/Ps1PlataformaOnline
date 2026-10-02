@@ -1,0 +1,140 @@
+{
+  "version": 1,
+  "track": {
+    "distanceM": 402.336,
+    "stepsPerSecond": 240,
+    "maxSeconds": 40,
+    "greenMinS": 3.2,
+    "greenMaxS": 4.6
+  },
+  "starterCar": "bmw-m4-stance",
+  "respect": {
+    "perfectShiftBonus": 15,
+    "maxPerfectShiftBonuses": 5,
+    "reactionBonus": 30,
+    "reactionBonusMaxS": 0.2,
+    "jumpStart": 5,
+    "didNotFinish": 0
+  },
+  "cars": [
+    {
+      "id": "bmw-m4-stance",
+      "name": "BMW M4 (F82) Stance",
+      "description": "Cupê alemão branco rebaixado a ar, cambagem negativa e rodas largas. S55 3.0 biturbo com remap.",
+      "model": "bmw-m4",
+      "price": 0,
+      "available": true,
+      "comingSoon": false,
+      "visual": {
+        "paint": "#eef0f2",
+        "stance": { "rideDrop": 0.06, "camberDeg": -6.5, "wheelOffset": 0.03 }
+      },
+      "engine": { "cylinders": 6, "layout": "i6-turbo", "turbo": true },
+      "physics": {
+        "massKg": 1600,
+        "cdA": 0.64,
+        "crr": 0.013,
+        "tireRadiusM": 0.301,
+        "gears": [3.83, 2.36, 1.69, 1.31, 1.0, 0.82],
+        "finalDrive": 2.83,
+        "efficiency": 0.86,
+        "idleRpm": 850,
+        "shiftRpm": 6500,
+        "limiterRpm": 7000,
+        "shiftTimeS": 0.32,
+        "grip": 1.12,
+        "driveWeight": 0.55,
+        "torque": [[800, 150], [1500, 210], [2500, 330], [3300, 560], [4800, 560], [5800, 520], [6500, 470], [7000, 420]]
+      }
+    },
+    {
+      "id": "bmw-f31-stance",
+      "name": "BMW 340i Touring (F31) Stance",
+      "description": "Perua alemã branca rebaixada a ar, cambagem negativa e rodas de tala larga. B58 3.0 turbo com remap.",
+      "model": "bmw-f31",
+      "price": 18000,
+      "available": false,
+      "comingSoon": true,
+      "visual": {
+        "paint": "#eef0f2",
+        "stance": { "rideDrop": 0.075, "camberDeg": -6.5, "wheelInset": 0.0 },
+        "plate": "STANCE"
+      },
+      "engine": { "cylinders": 6, "layout": "i6-turbo", "turbo": true },
+      "physics": {
+        "massKg": 1640,
+        "cdA": 0.66,
+        "crr": 0.013,
+        "tireRadiusM": 0.335,
+        "gears": [3.83, 2.36, 1.69, 1.31, 1.0, 0.82],
+        "finalDrive": 3.15,
+        "efficiency": 0.86,
+        "idleRpm": 850,
+        "shiftRpm": 6500,
+        "limiterRpm": 7000,
+        "shiftTimeS": 0.34,
+        "grip": 1.12,
+        "driveWeight": 0.56,
+        "torque": [[800, 150], [1500, 210], [2500, 330], [3300, 560], [4800, 560], [5800, 520], [6500, 470], [7000, 420]]
+      }
+    },
+    {
+      "id": "mustang-gt-2005",
+      "name": "Ford Mustang GT 2005",
+      "description": "V8 com compressor, preto brilhante com labaredas hot rod. O carro do Navalha.",
+      "model": "mustang-s197",
+      "price": 25000,
+      "available": false,
+      "comingSoon": true,
+      "visual": {
+        "paint": "#050506",
+        "plate": "NAVALHA"
+      },
+      "engine": { "cylinders": 8, "layout": "v8-cross", "turbo": false },
+      "physics": {
+        "massKg": 1590,
+        "cdA": 0.74,
+        "crr": 0.013,
+        "tireRadiusM": 0.335,
+        "gears": [3.38, 2.0, 1.32, 1.0, 0.8],
+        "finalDrive": 3.73,
+        "efficiency": 0.86,
+        "idleRpm": 800,
+        "shiftRpm": 6300,
+        "limiterRpm": 6800,
+        "shiftTimeS": 0.3,
+        "grip": 1.16,
+        "driveWeight": 0.55,
+        "torque": [[800, 260], [2000, 450], [3000, 610], [4000, 690], [5000, 680], [5800, 640], [6300, 580], [6800, 520]]
+      }
+    }
+  ],
+  "parts": [
+    { "id": "intake-1", "category": "engine", "name": "Admissão esportiva", "price": 1200, "comingSoon": true, "effects": { "torqueMult": 1.04 } },
+    { "id": "turbo-1", "category": "turbo", "name": "Turbina estágio 1", "price": 4500, "comingSoon": true, "effects": { "torqueMult": 1.1 } },
+    { "id": "turbo-2", "category": "turbo", "name": "Turbina estágio 2", "price": 9000, "comingSoon": true, "effects": { "torqueMult": 1.2 } },
+    { "id": "gearbox-1", "category": "transmission", "name": "Câmbio de engate rápido", "price": 3500, "comingSoon": true, "effects": { "shiftTimeMult": 0.75 } },
+    { "id": "tires-1", "category": "tires", "name": "Pneus drag radial", "price": 2500, "comingSoon": true, "effects": { "gripMult": 1.12 } },
+    { "id": "weight-1", "category": "weight", "name": "Redução de peso", "price": 3000, "comingSoon": true, "effects": { "massKg": -80 } },
+    { "id": "aero-1", "category": "aero", "name": "Kit aerodinâmico", "price": 2000, "comingSoon": true, "effects": { "cdAMult": 0.93 } }
+  ],
+  "opponents": [
+    {
+      "id": "navalha",
+      "name": "Navalha",
+      "bio": "Dono das ruas do porto. Mustang preto em chamas, zero conversa.",
+      "car": "mustang-gt-2005",
+      "reactionMinS": 0.17,
+      "reactionMaxS": 0.36,
+      "shiftErrorRpm": 520,
+      "launchRpm": 1900,
+      "respectWin": 250,
+      "respectLoss": 40,
+      "available": true,
+      "comingSoon": false
+    },
+    { "id": "em-breve-1", "name": "???", "bio": "Novo rival chegando.", "car": "", "available": false, "comingSoon": true },
+    { "id": "em-breve-2", "name": "???", "bio": "Novo rival chegando.", "car": "", "available": false, "comingSoon": true },
+    { "id": "em-breve-3", "name": "???", "bio": "Novo rival chegando.", "car": "", "available": false, "comingSoon": true }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "id": "bmw-m4",
+  "length": 4.67,
+  "width": 1.8336,
+  "height": 1.2171,
+  "frontAxle": 1.5203,
+  "rearAxle": -1.3371,
+  "trackHalf": 0.7237,
+  "wheelRadius": 0.3011,
+  "wheelWidth": 0.2401,
+  "wheelOuter": "left",
+  "hasCaliper": false,
+  "exhausts": [
+    [
+      -2.291,
+      0.2388,
+      0.2867
+    ],
+    [
+      -2.291,
+      0.2388,
+      -0.2867
+    ]
+  ],
+  "materials": [
+    "BMWBlack",
+    "BMWBlue",
+    "BMWSilver",
+    "BMWWhite",
+    "Black_mat",
+    "Interior",
+    "Material",
+    "Miror",
+    "Piano_Black",
+    "Reflectors",
+    "Solid_black",
+    "car_paint",
+    "car_paint.001",
+    "car_paint.002",
+    "car_paint.003",
+    "car_paint.004",
+    "car_paint.005",
+    "car_paint.006",
+    "chrome",
+    "chrome_headlight",
+    "chrome_red",
+    "glass",
+    "light",
+    "light_blue",
+    "rearlight_red",
+    "rim.001",
+    "tailights"
+  ],
+  "wheelMaterials": [
+    "rim",
+    "rim.001",
+    "rim_screw.001",
+    "tire_rubber"
+  ],
+  "triangles": {
+    "body": 191450,
+    "wheel": 62548
+  }
+}

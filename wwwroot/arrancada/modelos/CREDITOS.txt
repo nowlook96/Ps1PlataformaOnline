@@ -1,0 +1,17 @@
+Modelos 3D usados no jogo Arrancada do Porto (projeto de estudo, sem fins comerciais)
+=====================================================================================
+
+bmw-m4.glb
+  "BMW M4 F82" por CuRvEmAsTeR — Blend Swap #16463 (https://blendswap.com/blend/16463; antigo #81957)
+  Licença: Creative Commons Attribution 3.0 (CC-BY 3.0) — https://creativecommons.org/licenses/by/3.0/
+  Marcado como Fan Art: uso comercial proibido.
+  Modificações: convertido para glTF, subdivisão reduzida, peças unidas por material, roda separada
+  e clonada nas 4 posições, materiais substituídos pelos do jogo (Drag/CarrosBlender/exportar-glb.py).
+
+mustang-s197.glb
+  "Ford Mustang" por jlrazr — Blend Swap #17034 (https://www.blendswap.com/blends/view/17034)
+  Licença: Creative Commons Attribution 3.0 (CC-BY 3.0) — https://creativecommons.org/licenses/by/3.0/
+  Modificações: convertido para glTF, escala corrigida para 4,78 m, subdivisão reduzida, rodas clonadas,
+  materiais substituídos e grafismo (faixas/lâmina) pintado no shader.
+
+BMW e Ford são marcas de seus respectivos donos; este projeto não tem relação com elas.

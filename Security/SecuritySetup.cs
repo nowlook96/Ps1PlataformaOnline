@@ -153,7 +153,7 @@ public static class SecuritySetup
     }
 
     /// <summary>Chave de limite por visitante: o IP real informado pelo túnel ou, sem túnel, o IP da conexão.</summary>
-    private static string ClientKey(HttpContext ctx)
+    internal static string ClientKey(HttpContext ctx)
     {
         // Kestrel só escuta em 127.0.0.1, então este cabeçalho só pode ter vindo do cloudflared.
         var cf = ctx.Request.Headers["CF-Connecting-IP"].ToString();
